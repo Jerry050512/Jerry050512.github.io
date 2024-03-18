@@ -263,27 +263,6 @@
   </url>
   
   <url>
-    <loc>https://jerry050512.github.io/tags/computer/</loc>
-    <lastmod>2024-03-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jerry050512.github.io/tags/network/</loc>
-    <lastmod>2024-03-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jerry050512.github.io/tags/repair/</loc>
-    <lastmod>2024-03-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://jerry050512.github.io/tags/Zhejiang/</loc>
     <lastmod>2024-03-18</lastmod>
     <changefreq>weekly</changefreq>
@@ -333,7 +312,21 @@
   </url>
   
   <url>
+    <loc>https://jerry050512.github.io/tags/computer/</loc>
+    <lastmod>2024-03-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://jerry050512.github.io/tags/Windows/</loc>
+    <lastmod>2024-03-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jerry050512.github.io/tags/repair/</loc>
     <lastmod>2024-03-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -362,6 +355,20 @@
   
   <url>
     <loc>https://jerry050512.github.io/tags/Programming/</loc>
+    <lastmod>2024-03-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jerry050512.github.io/tags/network/</loc>
+    <lastmod>2024-03-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jerry050512.github.io/tags/writing/</loc>
     <lastmod>2024-03-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -410,27 +417,6 @@
   </url>
   
   <url>
-    <loc>https://jerry050512.github.io/tags/this/</loc>
-    <lastmod>2024-03-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jerry050512.github.io/tags/import/</loc>
-    <lastmod>2024-03-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jerry050512.github.io/tags/writing/</loc>
-    <lastmod>2024-03-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://jerry050512.github.io/tags/Hexo/</loc>
     <lastmod>2024-03-18</lastmod>
     <changefreq>weekly</changefreq>
@@ -460,6 +446,20 @@
   
   <url>
     <loc>https://jerry050512.github.io/tags/theme/</loc>
+    <lastmod>2024-03-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jerry050512.github.io/tags/this/</loc>
+    <lastmod>2024-03-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jerry050512.github.io/tags/import/</loc>
     <lastmod>2024-03-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -517,14 +517,14 @@
   </url>
   
   <url>
-    <loc>https://jerry050512.github.io/categories/Computer-Emergency-Guide/</loc>
+    <loc>https://jerry050512.github.io/categories/High-School-Technology-Book/</loc>
     <lastmod>2024-03-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://jerry050512.github.io/categories/High-School-Technology-Book/</loc>
+    <loc>https://jerry050512.github.io/categories/Computer-Emergency-Guide/</loc>
     <lastmod>2024-03-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -539,6 +539,13 @@
   
   <url>
     <loc>https://jerry050512.github.io/categories/High-School-Technology-Book/Data-and-Data-Structure/</loc>
+    <lastmod>2024-03-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jerry050512.github.io/categories/English-Writing/</loc>
     <lastmod>2024-03-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -560,13 +567,6 @@
   
   <url>
     <loc>https://jerry050512.github.io/categories/Interesting-Python-Things/</loc>
-    <lastmod>2024-03-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jerry050512.github.io/categories/English-Writing/</loc>
     <lastmod>2024-03-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
