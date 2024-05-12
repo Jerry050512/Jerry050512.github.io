@@ -1,0 +1,268 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>VPteam 神经网络任务 - 1 | Gang の blog</title><meta name="author" content="Gang"><meta name="copyright" content="Gang"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Task-1 训练⼀个⽹络识别⼿写数字  Task-2 利⽤BASNet将VPteam Python 问题中的所有图⽚转化为显著性图⽚  Solution-1 对于这个问题，其实在《PyTorch深度学习实践》完结合集这个教程中，前10章主要就是对于MINST数据集的训练，这个教程中的所有代码都放置在仓库中了，对于这个题目可以使用第10章的代码 首先我们先回顾一下这个课程中讲到构建神经网络的基本">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VPteam 神经网络任务 - 1">
+<meta property="og:url" content="https://jerry050512.github.io/2024/04/13/vpteam-nn-question-one/index.html">
+<meta property="og:site_name" content="Gang の blog">
+<meta property="og:description" content="Task-1 训练⼀个⽹络识别⼿写数字  Task-2 利⽤BASNet将VPteam Python 问题中的所有图⽚转化为显著性图⽚  Solution-1 对于这个问题，其实在《PyTorch深度学习实践》完结合集这个教程中，前10章主要就是对于MINST数据集的训练，这个教程中的所有代码都放置在仓库中了，对于这个题目可以使用第10章的代码 首先我们先回顾一下这个课程中讲到构建神经网络的基本">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jerry050512.github.io/img/avatar.jpeg">
+<meta property="article:published_time" content="2024-04-13T04:12:09.000Z">
+<meta property="article:modified_time" content="2024-05-12T11:22:12.922Z">
+<meta property="article:author" content="Gang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jerry050512.github.io/img/avatar.jpeg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://jerry050512.github.io/2024/04/13/vpteam-nn-question-one/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-P5BVKT9NTS"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-P5BVKT9NTS');
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: true
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'VPteam 神经网络任务 - 1',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-05-12 19:22:12'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" type = "text/css" media="print" href="/css/print.css"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2194693109520236" crossorigin="anonymous"></script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">56</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/heart-16-9.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Gang の blog"><span class="site-name">Gang の blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">VPteam 神经网络任务 - 1</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-04-13T04:12:09.000Z" title="发表于 2024-04-13 12:12:09">2024-04-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-05-12T11:22:12.922Z" title="更新于 2024-05-12 19:22:12">2024-05-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-Learning/">AI-Learning</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="VPteam 神经网络任务 - 1"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="task-1"><a class="markdownIt-Anchor" href="#task-1"></a> Task-1</h2>
+<p>训练⼀个⽹络识别⼿写数字</p>
+<h2 id="task-2"><a class="markdownIt-Anchor" href="#task-2"></a> Task-2</h2>
+<p>利⽤BASNet将<a href="https://jerry050512.github.io/2024/02/12/vpteam-python-questions/">VPteam Python 问题</a>中的所有图⽚转化为显著性图⽚</p>
+<h2 id="solution-1"><a class="markdownIt-Anchor" href="#solution-1"></a> Solution-1</h2>
+<p>对于这个问题，其实在<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Y7411d7Ys">《PyTorch深度学习实践》完结合集</a>这个教程中，前10章主要就是对于MINST数据集的训练，这个教程中的所有代码都放置在仓库中了，对于这个题目可以使用<a target="_blank" rel="noopener" href="https://github.com/Jerry050512/VPteam-PyTorch-DL-Practice/blob/main/10-advanced-convolutional-neural-network.ipynb">第10章的代码</a></p>
+<p>首先我们先回顾一下这个课程中讲到构建神经网络的基本流程：</p>
+<ol>
+<li>Prepare Dataset - 准备数据集</li>
+<li>Define Model - 定义模型</li>
+<li>Define Loss and Optimizer - 定义损失函数和优化器</li>
+<li>Train the Model - 训练模型</li>
+</ol>
+<p>完整的代码将会放置在<a target="_blank" rel="noopener" href="https://github.com/Jerry050512/VPteam-Pytorch-Task/blob/main/written-number-predict.ipynb">仓库</a>中。</p>
+<p>对于大部分内容其实不太需要说，核心是在模型的定义与训练上，接下来我们先回顾一些比较重要的概念。</p>
+<p><strong>Inception模块</strong> 是GoogleNet(也叫Inception V1)提出的一种创新网络结构,主要用于解决较深网络中的计算资源浪费和表征能力不足的问题。我来详细解释一下Inception模块的设计思路和工作原理:</p>
+<ol>
+<li>
+<p>启发思想<br />
+传统卷积神经网络每一层都使用相同大小的卷积核,但实际上不同大小的卷积核能够有效地提取不同尺度的特征。Inception模块设计的出发点就是在同一层使用多种不同尺度的卷积核,以增强网络的表征能力。</p>
+</li>
+<li>
+<p>核心结构<br />
+Inception模块由多个并行的卷积通路组成。典型的Inception模块包含1x1、3x3、5x5卷积核以及3x3最大池化层,每个通路输出的特征映射在最后拼接在一起作为该模块的输出。</p>
+</li>
+<li>
+<p>1x1卷积<br />
+1x1卷积在Inception模块中的作用是降维,即先使用1x1卷积减少输入特征映射的通道数,再进行3x3或5x5等卷积运算,从而大大减少了计算量和模型参数。</p>
+</li>
+<li>
+<p>分解卷积<br />
+为进一步减少计算量,Inception也使用了分解卷积的技巧。比如先进行1x3和3x1的卷积替代3x3卷积,先进行1x5和5x1的卷积替代5x5卷积,降低了参数和计算量。</p>
+</li>
+<li>
+<p>多级结构<br />
+在GoogleNet中,多个这样的Inception模块串联堆叠,形成网络的主干结构。不同级别的Inception模块可以使用不同的卷积核组合。</p>
+</li>
+<li>
+<p>优势<br />
+Inception模块通过并行的多尺度卷积和分解卷积大大提高了网络的表征能力,同时也有效地控制了计算复杂度和模型参数。因此GoogleNet相比AlexNet等早期网络在同等精度下模型参数大幅减少,是卷积神经网络发展的一个重要里程碑。</p>
+</li>
+</ol>
+<p>Inception模块的设计理念影响了后续很多优秀卷积神经网络结构,体现了&quot;多尺度、分解、并行&quot;等思想,引领了神经网络结构设计的新潮流。</p>
+<p><strong>卷积(Convolution)</strong></p>
+<ol>
+<li>卷积是卷积神经网络的核心运算,它可以从输入数据(如图像)中提取出局部特征。</li>
+<li>卷积的运算过程是:一个小的卷积核(kernel,也叫滤波器filter)在输入数据上滑动,对核窗口覆盖的区域做点积操作,得到输出特征映射。</li>
+<li>通过设置不同的卷积核,可以提取输入数据的不同特征,如边缘、纹理、颜色等。</li>
+<li>卷积核的权重在训练过程中不断学习调整,以获取最优特征。</li>
+<li>卷积运算保留了输入数据的局部空间关系,这使得卷积层能捕获数据的空间局部相关性。</li>
+<li>通过堆叠多层卷积层,可以逐步提取出更加抽象和复杂的特征表示。</li>
+</ol>
+<p><strong>池化(Pooling)</strong></p>
+<ol>
+<li>池化是对卷积后的特征映射进行下采样(dimension reduction),降低数据量的一种操作。</li>
+<li>最常用的是最大池化(max pooling),就是在池化窗口内取最大值作为输出特征。</li>
+<li>池化的主要作用是:<br />
+a. 减小特征的维度,降低后续计算量;<br />
+b. 实现平移不变性(translation invariance),使得特征对于小的平移保持稳定。</li>
+<li>池化使特征映射对局部扰动不那么敏感,提高了数据的鲁棱性和空间不变性。</li>
+<li>池化降低了维度同时也能够保留重要的特征信息,但池化操作也可能丢失一些细节信息。</li>
+</ol>
+<p>两者结合使得卷积神经网络能够高效地从原始数据(如图像)中学习层次化、越来越抽象的特征表示,帮助下游任务(如分类、检测)取得好的效果。合理利用卷积和池化是设计卷积网络的关键。</p>
+<p>那么我们的一个主要网络就是这样：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Net</span>(torch.nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        <span class="comment"># 第一层卷积</span></span><br><span class="line">        self.conv1 = torch.nn.Conv2d(<span class="number">1</span>, <span class="number">10</span>, <span class="number">5</span>)</span><br><span class="line">        <span class="comment"># 第二层卷积</span></span><br><span class="line">        self.conv2 = torch.nn.Conv2d(<span class="number">88</span>, <span class="number">20</span>, <span class="number">5</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 第一个InceptionA模块</span></span><br><span class="line">        self.incep1 = InceptionA(<span class="number">10</span>)</span><br><span class="line">        <span class="comment"># 第二个InceptionA模块</span></span><br><span class="line">        self.incep2 = InceptionA(<span class="number">20</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 最大池化层</span></span><br><span class="line">        self.mp = torch.nn.MaxPool2d(<span class="number">2</span>)</span><br><span class="line">        <span class="comment"># 全连接层</span></span><br><span class="line">        self.fc = torch.nn.Linear(<span class="number">1408</span>, <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        in_size = x.size(<span class="number">0</span>)</span><br><span class="line">        <span class="comment"># 第一层卷积和池化</span></span><br><span class="line">        x = F.relu(self.mp(self.conv1(x)))</span><br><span class="line">        <span class="comment"># 第一个InceptionA模块</span></span><br><span class="line">        x = self.incep1(x)</span><br><span class="line">        <span class="comment"># 第二层卷积和池化</span></span><br><span class="line">        x = F.relu(self.mp(self.conv2(x)))</span><br><span class="line">        <span class="comment"># 第二个InceptionA模块</span></span><br><span class="line">        x = self.incep2(x)</span><br><span class="line">        <span class="comment"># 展平向量</span></span><br><span class="line">        x = x.view(in_size, -<span class="number">1</span>)</span><br><span class="line">        <span class="comment"># 全连接层</span></span><br><span class="line">        x = self.fc(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line">model = Net()</span><br></pre></td></tr></table></figure>
+<p>这个模型就是一个简单的CNN模型，包含两个卷积层和一个全连接层，每个卷积输出后再加上一个Inception模块。</p>
+<p>训练的代码也是比较简单的：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">train</span>(<span class="params">epoch: <span class="built_in">int</span></span>):</span><br><span class="line">    running_loss = <span class="number">0.0</span>  <span class="comment"># 记录当前批次的损失总和</span></span><br><span class="line">    <span class="keyword">for</span> batch_idx, (inputs, target) <span class="keyword">in</span> <span class="built_in">enumerate</span>(train_loader):</span><br><span class="line">        inputs, target = inputs.to(device), target.to(device)  <span class="comment"># 将数据移动到指定设备</span></span><br><span class="line">        optimizer.zero_grad()  <span class="comment"># 清除上一次的梯度</span></span><br><span class="line"></span><br><span class="line">        outputs = model(inputs)  <span class="comment"># 通过模型获取输出</span></span><br><span class="line">        loss = criterion(outputs, target)  <span class="comment"># 计算损失</span></span><br><span class="line">        loss.backward()  <span class="comment"># 反向传播计算梯度</span></span><br><span class="line">        optimizer.step()  <span class="comment"># 更新模型参数</span></span><br><span class="line"></span><br><span class="line">        running_loss += loss.item()  <span class="comment"># 累加当前批次损失</span></span><br><span class="line">        <span class="keyword">if</span> batch_idx % <span class="number">100</span> == <span class="number">99</span>:  <span class="comment"># 每100个批次打印一次损失</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&#x27;[<span class="subst">&#123;epoch + <span class="number">1</span>&#125;</span>, <span class="subst">&#123;batch_idx + <span class="number">1</span>:5d&#125;</span>] loss: <span class="subst">&#123;running_loss / <span class="number">100</span>:<span class="number">.3</span>f&#125;</span>&#x27;</span>)</span><br><span class="line">            running_loss = <span class="number">0.0</span>  <span class="comment"># 重置累积损失</span></span><br></pre></td></tr></table></figure>
+<p>下面则是一个比较通用的测试函数，用于在训练结束后对模型进行测试：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test_model</span>(<span class="params">model, test_dir, device</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    测试给定模型的性能。</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    参数:</span></span><br><span class="line"><span class="string">    - model: 训练好的模型，用于进行图像识别。</span></span><br><span class="line"><span class="string">    - test_dir: 包含测试图像的目录路径。</span></span><br><span class="line"><span class="string">    - device: 指定运行设备，如&quot;cpu&quot;或&quot;cuda:0&quot;。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    返回值:</span></span><br><span class="line"><span class="string">    - 无。函数会逐个显示测试图像及其预测类别。</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 定义测试图像的转换流程</span></span><br><span class="line">    transform = transforms.Compose([</span><br><span class="line">        transforms.ToTensor(),</span><br><span class="line">        transforms.Normalize((<span class="number">0.1307</span>,), (<span class="number">0.3081</span>,))  <span class="comment"># 对于MNIST数据集的均值和标准差</span></span><br><span class="line">    ])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 为测试图像创建目录迭代器</span></span><br><span class="line">    test_images = os.listdir(test_dir)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 将模型设置为评估模式</span></span><br><span class="line">    model.<span class="built_in">eval</span>()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 遍历测试图像</span></span><br><span class="line">    <span class="keyword">for</span> image_name <span class="keyword">in</span> test_images:</span><br><span class="line">        image_path = os.path.join(test_dir, image_name)</span><br><span class="line">        image = Image.<span class="built_in">open</span>(image_path).convert(<span class="string">&#x27;L&#x27;</span>)  <span class="comment"># 转换为灰度图像</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 应用图像转换</span></span><br><span class="line">        image_tensor = transform(image).unsqueeze(<span class="number">0</span>)  <span class="comment"># 添加批次维度</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 将输入张量移动到指定设备</span></span><br><span class="line">        image_tensor = image_tensor.to(device)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 前向传播</span></span><br><span class="line">        <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">            output = model(image_tensor)</span><br><span class="line">            _, predicted = torch.<span class="built_in">max</span>(output.data, <span class="number">1</span>)  <span class="comment"># 获取预测类别</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 显示图像和预测值</span></span><br><span class="line">        plt.imshow(image, cmap=<span class="string">&#x27;gray&#x27;</span>)</span><br><span class="line">        plt.title(<span class="string">f&#x27;Predicted: <span class="subst">&#123;predicted.item()&#125;</span>&#x27;</span>)  <span class="comment"># 显示预测类别</span></span><br><span class="line">        plt.show()</span><br></pre></td></tr></table></figure>
+<p>分类器基本上都可以用这个代码，可以测试指定文件夹内的图片，并显示预测结果。</p>
+<p>下面是我运行的一部分结构，可以看到除了把6预测成8，其他数字是正确的。</p>
+<p><img src="https://i.postimg.cc/QMGjvrG2/number-recognize-4.png" alt="对4的预测结果" /><br />
+<img src="https://i.postimg.cc/pTkh2dPh/number-recognize-6.png" alt="对6的预测结果" /></p>
+<h2 id="solution-2"><a class="markdownIt-Anchor" href="#solution-2"></a> Solution-2</h2>
+<p>对于这个问题，其实BASNet仓库中的<code>basnet_test.py</code>已经基本实现了需要的功能，只要小作修改即可。</p>
+<p>基本库的导入和两个基础函数都大差不差，不过我对<code>save_output()</code>函数做了一些小修改：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">save_output</span>(<span class="params">image_path: <span class="built_in">str</span>, pred, output_dir=join(<span class="params"><span class="string">&quot;.&quot;</span>, <span class="string">&quot;output&quot;</span></span>)</span>):</span><br><span class="line">    <span class="comment"># 使用os.path.join()函数来拼接路径，避免拼接错误</span></span><br><span class="line">    pred = pred.squeeze()</span><br><span class="line">    pred = pred.cpu().data.numpy()</span><br><span class="line">    <span class="comment"># 原地更新，减少更多复杂的变量名</span></span><br><span class="line"></span><br><span class="line">    img = Image.fromarray(pred * <span class="number">255</span>).convert(<span class="string">&#x27;RGB&#x27;</span>)</span><br><span class="line">    image_name = image_path.split(sep)[-<span class="number">1</span>]</span><br><span class="line">    original_image = io.imread(image_path)</span><br><span class="line">    img = img.resize((original_image.shape[<span class="number">1</span>], original_image.shape[<span class="number">0</span>]), Image.BILINEAR)</span><br><span class="line">    filename = <span class="string">&#x27;.&#x27;</span>.join(image_name.split(<span class="string">&#x27;.&#x27;</span>)[:-<span class="number">1</span>])</span><br><span class="line">    <span class="comment"># 整合一下写法</span></span><br><span class="line">    img.save(join(output_dir, filename + <span class="string">&#x27;_pred.png&#x27;</span>))</span><br></pre></td></tr></table></figure>
+<p>还有一些其他的一些小修改就是：</p>
+<ul>
+<li>使用 <code>os.path.sep</code> 来代替原来写死的<code>/</code>，避免在Windows上的错误。</li>
+<li>利用 <code>d1, *_ = net(inputs)</code> 这种写法，避免了多余的变量名。</li>
+</ul>
+<p>运行仓库里的<a target="_blank" rel="noopener" href="https://github.com/Jerry050512/VPteam-Pytorch-Task/blob/main/salient-object-detection.ipynb">Jupyter Notebook</a>，就可以得到结果啦~</p>
+<p><img src="https://i.postimg.cc/YqPdXHdV/Predictions.png" alt="Predictions Result" /></p>
+<p>虽然结果有点一言难尽（）</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://jerry050512.github.io">Gang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://jerry050512.github.io/2024/04/13/vpteam-nn-question-one/">https://jerry050512.github.io/2024/04/13/vpteam-nn-question-one/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://jerry050512.github.io" target="_blank">Gang の blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/avatar.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/04/15/data-structure-string/" title="数据结构 - 字符串"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">数据结构 - 字符串</div></div></a></div><div class="next-post pull-right"><a href="/2024/03/29/detailed-explanation-of-library-management-system/" title="数据结构 - 图书管理系统实现详解"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">数据结构 - 图书管理系统实现详解</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Gang</div><div class="author-info__description">Hello World!</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">56</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Jerry050512"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Jerry050512" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:jerry050512@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">No Announcement now</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#task-1"><span class="toc-number">1.</span> <span class="toc-text"> Task-1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#task-2"><span class="toc-number">2.</span> <span class="toc-text"> Task-2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#solution-1"><span class="toc-number">3.</span> <span class="toc-text"> Solution-1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#solution-2"><span class="toc-number">4.</span> <span class="toc-text"> Solution-2</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/12/data-structure-homework-1/" title="数据结构 - 作业一">数据结构 - 作业一</a><time datetime="2024-05-12T11:45:01.828Z" title="更新于 2024-05-12 19:45:01">2024-05-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/12/data-structure-exp-DNA-match/" title="数据结构实验 - DNA序列匹配">数据结构实验 - DNA序列匹配</a><time datetime="2024-05-12T11:31:37.502Z" title="更新于 2024-05-12 19:31:37">2024-05-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/29/hexo-theme-config/" title="Hexo 主题配置">Hexo 主题配置</a><time datetime="2024-05-12T11:22:12.922Z" title="更新于 2024-05-12 19:22:12">2024-05-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2024 By Gang</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Hexo博客部署筆記 | Gang の blog</title><meta name="author" content="Gang"><meta name="copyright" content="Gang"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Hexo is a fast, simple and powerful blog framework. You write posts in Markdown (or other markup languages) and Hexo generates static files with a beautiful theme in seconds. p.s. 本篇文章環境為 Windows 11 專">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo博客部署筆記">
+<meta property="og:url" content="https://jerry050512.github.io/2024/02/08/hexo-deployment/index.html">
+<meta property="og:site_name" content="Gang の blog">
+<meta property="og:description" content="Hexo is a fast, simple and powerful blog framework. You write posts in Markdown (or other markup languages) and Hexo generates static files with a beautiful theme in seconds. p.s. 本篇文章環境為 Windows 11 專">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jerry050512.github.io/img/avatar.jpeg">
+<meta property="article:published_time" content="2024-02-08T14:12:00.000Z">
+<meta property="article:modified_time" content="2024-05-12T11:22:12.921Z">
+<meta property="article:author" content="Gang">
+<meta property="article:tag" content="Windows">
+<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="Deployment">
+<meta property="article:tag" content="Note">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jerry050512.github.io/img/avatar.jpeg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://jerry050512.github.io/2024/02/08/hexo-deployment/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-P5BVKT9NTS"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-P5BVKT9NTS');
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: true
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Hexo博客部署筆記',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-05-12 19:22:12'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" type = "text/css" media="print" href="/css/print.css"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2194693109520236" crossorigin="anonymous"></script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">56</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/heart-16-9.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Gang の blog"><span class="site-name">Gang の blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Hexo博客部署筆記</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-02-08T14:12:00.000Z" title="发表于 2024-02-08 22:12:00">2024-02-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-05-12T11:22:12.921Z" title="更新于 2024-05-12 19:22:12">2024-05-12</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Hexo博客部署筆記"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><a target="_blank" rel="noopener" href="https://hexo.io/docs/">Hexo</a> is a fast, simple and powerful blog framework. You write posts in Markdown (or other markup languages) and Hexo generates static files with a beautiful theme in seconds.</p>
+<p>p.s. 本篇文章環境為 Windows 11 專業版.</p>
+<h2 id="預備步驟"><a class="markdownIt-Anchor" href="#預備步驟"></a> 預備步驟</h2>
+<ol>
+<li>安裝 <a target="_blank" rel="noopener" href="https://git-scm.com/download/win">git</a>.</li>
+<li>安裝 <a target="_blank" rel="noopener" href="https://nodejs.org/en/download/">Node.js</a>.
+<ul>
+<li>可透過安裝 <a target="_blank" rel="noopener" href="https://github.com/jasongin/nvs/"><code>nvs</code></a> 來管理多個版本的 Node.js.
+<ul>
+<li>法一 - 透過 <code>winget</code> 安裝</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">winget install jasongin.nvs</span><br></pre></td></tr></table></figure>
+<ul>
+<li>法二 - 透過 <code>choco</code> 安裝</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">choco install nvs</span><br></pre></td></tr></table></figure>
+<ul>
+<li>或直接從github下載msi安裝程式</li>
+</ul>
+</li>
+<li>運行以下命令</li>
+</ul>
+ <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nvs add latest</span><br><span class="line">nvs use latest</span><br><span class="line">nvs link latest</span><br></pre></td></tr></table></figure>
+<ul>
+<li>正常的輸出應該是:</li>
+</ul>
+ <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&gt; nvs add latest</span><br><span class="line">Downloading [<span class="comment">###########################################################################################] 100%</span></span><br><span class="line"><span class="type">Extracting</span>  [<span class="comment">###########################################################################################] 100%</span></span><br><span class="line"><span class="type">Added</span> <span class="type">at</span>: <span class="variable">$env:LOCALAPPDATA</span>\<span class="type">nvs</span>\<span class="type">node</span>\<span class="number">21.6</span><span class="type">.1</span>\<span class="type">x64</span>\<span class="type">node.exe</span></span><br><span class="line"><span class="type">To</span> <span class="type">use</span> <span class="type">this</span> <span class="type">version</span> <span class="type">now</span>: <span class="type">nvs</span> <span class="type">use</span> <span class="type">node</span>/<span class="number">21.6</span><span class="type">.1</span>/<span class="type">x64</span></span><br><span class="line">&gt; <span class="type">nvs</span> <span class="type">use</span> <span class="type">latest</span></span><br><span class="line"><span class="type">PATH</span> -= <span class="type">C</span>:\<span class="type">Program</span> <span class="type">Files</span>\<span class="type">nodejs</span></span><br><span class="line"><span class="type">PATH</span> += <span class="variable">$env:LOCALAPPDATA</span>\<span class="type">nvs</span>\<span class="type">node</span>\<span class="number">21.6</span><span class="type">.1</span>\<span class="type">x64</span></span><br><span class="line">&gt; <span class="type">nvs</span> <span class="type">link</span> <span class="type">latest</span></span><br><span class="line"><span class="variable">$env:LOCALAPPDATA</span>\<span class="type">nvs</span>\<span class="type">default</span> -&gt; <span class="variable">$env:LOCALAPPDATA</span>\<span class="type">nvs</span>\<span class="type">node</span>\<span class="number">21.6</span><span class="type">.1</span>\<span class="type">x64</span></span><br><span class="line"><span class="type">User</span> <span class="type">profile</span> <span class="type">PATH</span> += <span class="variable">$env:LOCALAPPDATA</span>\<span class="type">nvs</span>\<span class="type">default</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用 <code>node -v</code> 來檢驗是否正確安裝Node.js.</li>
+</ul>
+ <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; node <span class="literal">-v</span></span><br><span class="line">v21.<span class="number">6.1</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="安裝-hexo"><a class="markdownIt-Anchor" href="#安裝-hexo"></a> 安裝 Hexo</h2>
+<h3 id="install-hexo"><a class="markdownIt-Anchor" href="#install-hexo"></a> Install Hexo</h3>
+<p>Once all the requirements are installed, you can install Hexo with npm:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> npm install <span class="literal">-g</span> hexo<span class="literal">-cli</span></span><br></pre></td></tr></table></figure>
+<h3 id="advanced-installation-and-usage"><a class="markdownIt-Anchor" href="#advanced-installation-and-usage"></a> Advanced installation and usage</h3>
+<p>Advanced users may prefer to install and use hexo package instead.</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> npm install hexo</span><br></pre></td></tr></table></figure>
+<p>Once installed, you can run Hexo in two ways:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx hexo &lt;command&gt;</span><br></pre></td></tr></table></figure>
+<p>Linux users can set relative path of node_modules/ folder:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;PATH=&quot;$PATH:./node_modules/.bin&quot;&#x27;</span> &gt;&gt; ~/.profile</span><br></pre></td></tr></table></figure>
+<p>then run Hexo using <code>hexo &lt;command&gt;</code></p>
+<h3 id="所以"><a class="markdownIt-Anchor" href="#所以"></a> 所以</h3>
+<p>我選擇直接 <code>npm install -g hexo-cli</code>.</p>
+<p>看到 <code>added 54 packages in 8s</code> 就算成功了.</p>
+<h2 id="開始開發"><a class="markdownIt-Anchor" href="#開始開發"></a> 開始開發</h2>
+<p>使用如下命令初始化你的項目資料夾:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; E:; <span class="built_in">cd</span> projects <span class="comment"># 切換到 projects 資料夾</span></span><br><span class="line">&gt; hexo init gang<span class="literal">-no-blog</span></span><br><span class="line">INFO  Cloning hexo<span class="literal">-starter</span> https://github.com/hexojs/hexo<span class="literal">-starter</span>.git</span><br><span class="line">fatal: unable to access <span class="string">&#x27;https://github.com/hexojs/hexo-starter.git/&#x27;</span>: Recv failure: Connection was reset</span><br><span class="line">WARN  git clone failed. Copying <span class="keyword">data</span> instead</span><br><span class="line">INFO  Install dependencies</span><br><span class="line">INFO  <span class="built_in">Start</span> blogging with Hexo!</span><br><span class="line">&gt; <span class="built_in">cd</span> gang<span class="literal">-no-blog</span></span><br></pre></td></tr></table></figure>
+<p>測試一下!!<br />
+運行 <code>hexo generate</code> 命令, 然後在VSCode中切換到 <code>public</code> 資料夾, 就可以使用live server預覽生成的博客了.</p>
+<h2 id="部署到-github-pages"><a class="markdownIt-Anchor" href="#部署到-github-pages"></a> 部署到 GitHub Pages</h2>
+<p>跟著這篇<a target="_blank" rel="noopener" href="https://hexo.io/docs/github-pages">官方教程</a>走就好👌</p>
+<h2 id="結果還是用了one-command"><a class="markdownIt-Anchor" href="#結果還是用了one-command"></a> 結果還是用了One Command</h2>
+<p>記一下Github的Access Token在<a target="_blank" rel="noopener" href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token">這裏</a>生成.</p>
+<ul>
+<li>部署命令：<code>hexo clean; hexo deploy</code></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://jerry050512.github.io">Gang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://jerry050512.github.io/2024/02/08/hexo-deployment/">https://jerry050512.github.io/2024/02/08/hexo-deployment/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://jerry050512.github.io" target="_blank">Gang の blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Windows/">Windows</a><a class="post-meta__tags" href="/tags/Hexo/">Hexo</a><a class="post-meta__tags" href="/tags/Deployment/">Deployment</a><a class="post-meta__tags" href="/tags/Note/">Note</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/02/09/vpteam-learning/" title="VPteam 學習記錄"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">VPteam 學習記錄</div></div></a></div><div class="next-post pull-right"><a href="/2024/02/08/hello-world/" title="Hello World"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Hello World</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/03/01/computer-emergency-guide-for-common/" title="Windows 电脑应急指南 - 通用篇"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-01</div><div class="title">Windows 电脑应急指南 - 通用篇</div></div></a></div><div><a href="/2024/03/02/windows-office-activation/" title="Windows &#x2F; Office 激活教程"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-02</div><div class="title">Windows &#x2F; Office 激活教程</div></div></a></div><div><a href="/2024/03/17/flutter-budswitch-project/" title="Flutter 开发蓝牙耳机切换软件"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-17</div><div class="title">Flutter 开发蓝牙耳机切换软件</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Gang</div><div class="author-info__description">Hello World!</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">56</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Jerry050512"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Jerry050512" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:jerry050512@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">No Announcement now</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A0%90%E5%82%99%E6%AD%A5%E9%A9%9F"><span class="toc-number">1.</span> <span class="toc-text"> 預備步驟</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-hexo"><span class="toc-number">2.</span> <span class="toc-text"> 安裝 Hexo</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#install-hexo"><span class="toc-number">2.1.</span> <span class="toc-text"> Install Hexo</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#advanced-installation-and-usage"><span class="toc-number">2.2.</span> <span class="toc-text"> Advanced installation and usage</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%80%E4%BB%A5"><span class="toc-number">2.3.</span> <span class="toc-text"> 所以</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%96%8B%E5%A7%8B%E9%96%8B%E7%99%BC"><span class="toc-number">3.</span> <span class="toc-text"> 開始開發</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2%E5%88%B0-github-pages"><span class="toc-number">4.</span> <span class="toc-text"> 部署到 GitHub Pages</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B5%90%E6%9E%9C%E9%82%84%E6%98%AF%E7%94%A8%E4%BA%86one-command"><span class="toc-number">5.</span> <span class="toc-text"> 結果還是用了One Command</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/12/data-structure-homework-1/" title="数据结构 - 作业一">数据结构 - 作业一</a><time datetime="2024-05-12T11:45:01.828Z" title="更新于 2024-05-12 19:45:01">2024-05-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/12/data-structure-exp-DNA-match/" title="数据结构实验 - DNA序列匹配">数据结构实验 - DNA序列匹配</a><time datetime="2024-05-12T11:31:37.502Z" title="更新于 2024-05-12 19:31:37">2024-05-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/29/hexo-theme-config/" title="Hexo 主题配置">Hexo 主题配置</a><time datetime="2024-05-12T11:22:12.922Z" title="更新于 2024-05-12 19:22:12">2024-05-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2024 By Gang</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

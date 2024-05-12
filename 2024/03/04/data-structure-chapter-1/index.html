@@ -1,0 +1,266 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>浙江技术选择性必修一 - 第一章 数据与数据的组织 | Gang の blog</title><meta name="author" content="Gang"><meta name="copyright" content="Gang"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="开个新坑, 这里是高中信息技术的笔记, 这个分类目前放选择性必修一的一些笔记, 同时由于最近在学数据结构与算法分析这门课程, 对于高中笔记的补充会放在分割线后.   根据事物之间的关系确定合理的数据结构, 并借助其来组织数据, 设计算法.   数据  事物的多样性, 复杂性  数字  由阿拉伯数字或其他含义相同的符号表示.  数字本身没有意义, 没有量的含义.  数值  由数字, 符号组成的, 具">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浙江技术选择性必修一 - 第一章 数据与数据的组织">
+<meta property="og:url" content="https://jerry050512.github.io/2024/03/04/data-structure-chapter-1/index.html">
+<meta property="og:site_name" content="Gang の blog">
+<meta property="og:description" content="开个新坑, 这里是高中信息技术的笔记, 这个分类目前放选择性必修一的一些笔记, 同时由于最近在学数据结构与算法分析这门课程, 对于高中笔记的补充会放在分割线后.   根据事物之间的关系确定合理的数据结构, 并借助其来组织数据, 设计算法.   数据  事物的多样性, 复杂性  数字  由阿拉伯数字或其他含义相同的符号表示.  数字本身没有意义, 没有量的含义.  数值  由数字, 符号组成的, 具">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jerry050512.github.io/img/avatar.jpeg">
+<meta property="article:published_time" content="2024-03-04T12:26:12.000Z">
+<meta property="article:modified_time" content="2024-05-12T11:22:12.913Z">
+<meta property="article:author" content="Gang">
+<meta property="article:tag" content="Zhejiang">
+<meta property="article:tag" content="IT">
+<meta property="article:tag" content="technology">
+<meta property="article:tag" content="data structure">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jerry050512.github.io/img/avatar.jpeg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://jerry050512.github.io/2024/03/04/data-structure-chapter-1/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-P5BVKT9NTS"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-P5BVKT9NTS');
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: true
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '浙江技术选择性必修一 - 第一章 数据与数据的组织',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-05-12 19:22:12'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" type = "text/css" media="print" href="/css/print.css"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2194693109520236" crossorigin="anonymous"></script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">56</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/heart-16-9.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Gang の blog"><span class="site-name">Gang の blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">浙江技术选择性必修一 - 第一章 数据与数据的组织</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-03-04T12:26:12.000Z" title="发表于 2024-03-04 20:26:12">2024-03-04</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-05-12T11:22:12.913Z" title="更新于 2024-05-12 19:22:12">2024-05-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/High-School-Technology-Book/">High-School-Technology-Book</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Data-Structure-and-Algorithm-Analysis/">Data-Structure-and-Algorithm-Analysis</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/High-School-Technology-Book/Data-and-Data-Structure/">Data-and-Data-Structure</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="浙江技术选择性必修一 - 第一章 数据与数据的组织"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>开个新坑, 这里是高中信息技术的笔记, 这个分类目前放选择性必修一的一些笔记, 同时由于最近在学数据结构与算法分析这门课程, 对于高中笔记的补充会放在分割线后.</p>
+<hr />
+<blockquote>
+<p>根据事物之间的关系确定合理的数据结构, 并借助其来组织数据, 设计算法.</p>
+</blockquote>
+<h2 id="数据"><a class="markdownIt-Anchor" href="#数据"></a> 数据</h2>
+<blockquote>
+<p>事物的多样性, 复杂性</p>
+</blockquote>
+<p><strong>数字</strong>  由阿拉伯数字或其他含义相同的符号表示.</p>
+<ul>
+<li>数字本身没有意义, 没有量的含义.</li>
+</ul>
+<p><strong>数值</strong>  由数字, 符号组成的, 具有量的意义的, 可以进行算术运算的数据.<br />
+<strong>数据</strong>  多指用计算机进行处理的符号表示的总称.</p>
+<ul>
+<li>其他表现形式  数字, 文字 → 图形, 图像, 视频, 音频等.</li>
+<li><em>数据促进了人类社会的发展.</em></li>
+<li><em>大数据推动人类进入一个崭新的时代.</em></li>
+</ul>
+<h2 id="数据的组织"><a class="markdownIt-Anchor" href="#数据的组织"></a> 数据的组织</h2>
+<blockquote>
+<p>算法 + 数据结构 = 程序</p>
+</blockquote>
+<p><strong>数据元素</strong>(Data Element)  数据的基本单位.</p>
+<ul>
+<li>别称: 元素, 节点, 顶点, 记录.</li>
+</ul>
+<p><strong>数据类型</strong>(Data Type)  具有相同性质的计算机数据的集合以及在这个数据集合上的一组操作.</p>
+<ul>
+<li>基本数据类型(原子数据类型)  计算机编程环境提供.</li>
+<li>结构数据类型  在程序设计中由基本数据类型构造出的, 复合的数据类型.</li>
+</ul>
+<p><strong>数据结构</strong>(Data Structure)  数据元素之间的相互关系. (数据的组织形式)</p>
+<ul>
+<li>数据的逻辑结构</li>
+<li>数据的存储结构</li>
+<li>数据的运算</li>
+<li><strong>目的</strong>:
+<ul>
+<li>i. 确保数据处理的正确性.</li>
+<li>ii. 提高编程实现和数据处理的效率.</li>
+</ul>
+</li>
+</ul>
+<p><strong>数组</strong>  描述数据对象本身, 数据所处位置, 数据前后关系.</p>
+<ul>
+<li>遍历  根据数据间的逻辑关系, 遵循一定顺序, 依次对所有数据做一次且仅做一次访问.</li>
+</ul>
+<p><strong>链表</strong>  不关心数据的具体位置, 只知道相互的链接顺序.</p>
+<ul>
+<li>单向, 双向, 循环链表</li>
+<li>指针(Pointer)  指示一个数据存储地址的变量.</li>
+</ul>
+<p><strong>栈</strong>  后进先出(Last In First Out, LIFO)<br />
+<strong>队列</strong>  先进先出(First In First Out, FIFO)<br />
+<strong>树</strong> 一个元素上面只有一个元素, 而下面由多个元素相邻.<br />
+<strong>线性表</strong> 0个或多个元素组成的有限序列.</p>
+<hr />
+<h2 id="补充术语"><a class="markdownIt-Anchor" href="#补充术语"></a> 补充术语</h2>
+<p><strong>数据对象</strong>  数据元素及其关系的集合, 是数据的一个子集.<br />
+<strong>抽象数据类型</strong>(Abstract Data Type, ADT)  一般是指由用户定义的, 表示应用问题的数学模型, 以及定义在这个模型商店一组操作的总称. (p.s. 这个在后续&quot;树&quot;的那一章的高中部分提到)</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ADT ADTClassName &#123;</span><br><span class="line">    DataObject: <span class="comment">// Definition for DataObject</span></span><br><span class="line">    DataRelationship: <span class="comment">// Definition for DataRelaionship</span></span><br><span class="line">    Operation: <span class="comment">// Definition for Operation</span></span><br><span class="line">&#125; ADT ADTClassName;</span><br></pre></td></tr></table></figure>
+<p>其中, 基本操作的定义用:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Operation</span>(ParameterList)</span><br><span class="line">    InitCond: <span class="comment">// Description of initial conditions</span></span><br><span class="line">    OperationRes: <span class="comment">// Description of results</span></span><br></pre></td></tr></table></figure>
+<h2 id="算法的定义及特性"><a class="markdownIt-Anchor" href="#算法的定义及特性"></a> 算法的定义及特性</h2>
+<p>p.s. 事实上, 这个部分是高中技术必修一的内容()</p>
+<p><strong>5个重要特性</strong></p>
+<ul>
+<li>有穷性</li>
+<li>确定性</li>
+<li>可行性</li>
+<li>输入  0个或多个输入</li>
+<li>输出  1个或多个输出</li>
+</ul>
+<p><strong>时间复杂度的数学定义</strong></p>
+<p>若 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">T(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">f(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span> 是定义在正整数集合上的两个函数, 则 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo>=</mo><mi>O</mi><mo stretchy="false">(</mo><mi>f</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">T(n) = O(f(n))</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span><span class="mclose">)</span></span></span></span> 当且仅当存在正常数 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi></mrow><annotation encoding="application/x-tex">C</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>n</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">n_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>, 当 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>≥</mo><msub><mi>n</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">n \ge n_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 时, 有 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo>≤</mo><mi>C</mi><mi>f</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">T(n) \le Cf(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span>.</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://jerry050512.github.io">Gang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://jerry050512.github.io/2024/03/04/data-structure-chapter-1/">https://jerry050512.github.io/2024/03/04/data-structure-chapter-1/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://jerry050512.github.io" target="_blank">Gang の blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Zhejiang/">Zhejiang</a><a class="post-meta__tags" href="/tags/IT/">IT</a><a class="post-meta__tags" href="/tags/technology/">technology</a><a class="post-meta__tags" href="/tags/data-structure/">data structure</a><a class="post-meta__tags" href="/tags/algorithm/">algorithm</a><a class="post-meta__tags" href="/tags/C/">C++</a><a class="post-meta__tags" href="/tags/Python/">Python</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/03/05/import-this-in-this-py/" title="在 `this.py` 中 `import this`"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">在 `this.py` 中 `import this`</div></div></a></div><div class="next-post pull-right"><a href="/2024/03/02/windows-office-activation/" title="Windows / Office 激活教程"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Windows / Office 激活教程</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/03/06/data-structure-chapter-2/" title="浙江技术选择性必修一 - 第二章 数组与链表"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-06</div><div class="title">浙江技术选择性必修一 - 第二章 数组与链表</div></div></a></div><div><a href="/2024/03/18/data-structure-chapter-3/" title="浙江技术选择性必修一 - 第三章 字符串、队列和栈"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-18</div><div class="title">浙江技术选择性必修一 - 第三章 字符串、队列和栈</div></div></a></div><div><a href="/2024/04/15/data-structure-string/" title="数据结构 - 字符串"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-04-15</div><div class="title">数据结构 - 字符串</div></div></a></div><div><a href="/2024/05/12/data-structure-exp-DNA-match/" title="数据结构实验 - DNA序列匹配"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-12</div><div class="title">数据结构实验 - DNA序列匹配</div></div></a></div><div><a href="/2024/03/13/english-continue-writing-zhejiang/" title="浙江高考英语续写 - Pumpkin Flight: A Halloween Odyssey"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-13</div><div class="title">浙江高考英语续写 - Pumpkin Flight: A Halloween Odyssey</div></div></a></div><div><a href="/2024/05/12/data-structure-homework-1/" title="数据结构 - 作业一"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-12</div><div class="title">数据结构 - 作业一</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Gang</div><div class="author-info__description">Hello World!</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">56</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Jerry050512"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Jerry050512" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:jerry050512@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">No Announcement now</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE"><span class="toc-number">1.</span> <span class="toc-text"> 数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%9A%84%E7%BB%84%E7%BB%87"><span class="toc-number">2.</span> <span class="toc-text"> 数据的组织</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%E6%9C%AF%E8%AF%AD"><span class="toc-number">3.</span> <span class="toc-text"> 补充术语</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E7%9A%84%E5%AE%9A%E4%B9%89%E5%8F%8A%E7%89%B9%E6%80%A7"><span class="toc-number">4.</span> <span class="toc-text"> 算法的定义及特性</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/12/data-structure-homework-1/" title="数据结构 - 作业一">数据结构 - 作业一</a><time datetime="2024-05-12T11:45:01.828Z" title="更新于 2024-05-12 19:45:01">2024-05-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/12/data-structure-exp-DNA-match/" title="数据结构实验 - DNA序列匹配">数据结构实验 - DNA序列匹配</a><time datetime="2024-05-12T11:31:37.502Z" title="更新于 2024-05-12 19:31:37">2024-05-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/29/hexo-theme-config/" title="Hexo 主题配置">Hexo 主题配置</a><time datetime="2024-05-12T11:22:12.922Z" title="更新于 2024-05-12 19:22:12">2024-05-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2024 By Gang</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

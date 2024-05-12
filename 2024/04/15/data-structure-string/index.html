@@ -1,0 +1,204 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>数据结构 - 字符串 | Gang の blog</title><meta name="author" content="Gang"><meta name="copyright" content="Gang"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="本文将重点阐述字符串中的KMP模式匹配算法。 本文代码放置在Github处。  BF 算法 不多赘述了，给一个简要的代码： 123456789101112131415161718192021vector&lt;int&gt; bf_search(const string &amp;text, const string &amp;pattern)&amp;#123;    vector&lt;int&gt;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构 - 字符串">
+<meta property="og:url" content="https://jerry050512.github.io/2024/04/15/data-structure-string/index.html">
+<meta property="og:site_name" content="Gang の blog">
+<meta property="og:description" content="本文将重点阐述字符串中的KMP模式匹配算法。 本文代码放置在Github处。  BF 算法 不多赘述了，给一个简要的代码： 123456789101112131415161718192021vector&lt;int&gt; bf_search(const string &amp;text, const string &amp;pattern)&amp;#123;    vector&lt;int&gt;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jerry050512.github.io/img/avatar.jpeg">
+<meta property="article:published_time" content="2024-04-15T13:27:48.000Z">
+<meta property="article:modified_time" content="2024-05-12T11:22:12.913Z">
+<meta property="article:author" content="Gang">
+<meta property="article:tag" content="technology">
+<meta property="article:tag" content="data structure">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="C++">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jerry050512.github.io/img/avatar.jpeg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://jerry050512.github.io/2024/04/15/data-structure-string/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-P5BVKT9NTS"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-P5BVKT9NTS');
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: true
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '数据结构 - 字符串',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-05-12 19:22:12'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" type = "text/css" media="print" href="/css/print.css"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2194693109520236" crossorigin="anonymous"></script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">56</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/heart-16-9.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Gang の blog"><span class="site-name">Gang の blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">数据结构 - 字符串</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-04-15T13:27:48.000Z" title="发表于 2024-04-15 21:27:48">2024-04-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-05-12T11:22:12.913Z" title="更新于 2024-05-12 19:22:12">2024-05-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Data-Structure-and-Algorithm-Analysis/">Data-Structure-and-Algorithm-Analysis</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="数据结构 - 字符串"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>本文将重点阐述字符串中的KMP模式匹配算法。</p>
+<p>本文代码放置在<a target="_blank" rel="noopener" href="https://github.com/Jerry050512/Data-Structure-Cpp-Implement/blob/main/Chapter-3/match.cpp">Github</a>处。</p>
+<h2 id="bf-算法"><a class="markdownIt-Anchor" href="#bf-算法"></a> BF 算法</h2>
+<p>不多赘述了，给一个简要的代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">bf_search</span><span class="params">(<span class="type">const</span> string &amp;text, <span class="type">const</span> string &amp;pattern)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; result;</span><br><span class="line">    <span class="type">int</span> text_len = text.<span class="built_in">length</span>();</span><br><span class="line">    <span class="type">int</span> pattern_len = pattern.<span class="built_in">length</span>();</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>; i &lt; text_len-pattern_len+<span class="number">1</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>; j &lt; pattern_len; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(text[i+j] != pattern[j])</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(j == pattern_len<span class="number">-1</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                result.<span class="built_in">push_back</span>(i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="kmp-算法"><a class="markdownIt-Anchor" href="#kmp-算法"></a> KMP 算法</h2>
+<p>本文重点在KMP算法, 但请注意, 国内网站与本课程教科书都是写的一个 <code>next</code> 数组, 而国外则比较常用 <code>lps</code> 数组, 两者的表示略有区别. 本文将使用 <code>lps</code> 数组.</p>
+<h3 id="预准备-lps-数组"><a class="markdownIt-Anchor" href="#预准备-lps-数组"></a> 预准备 - <code>lps</code> 数组</h3>
+<p>先介绍一下LPS是什么, LPS (the Longest Prefix Suffix), 就是最长的公共前缀和后缀.</p>
+<p>与 <code>next</code> 数组不同, <code>next</code> 记录 <code>j</code> 指针回退的位置, 而 <code>lps</code> 则只是记录对应字符串的最长公共前后缀长度.</p>
+<p>最长公共前后缀到底有什么用呢? 其实就是减少<code>j</code>指针回退的次数, 原本i, j都需要回退, 而在KMP算法中, 只需要回退j, 因为我们只要找到模式串中可以与i之前的字符匹配的公共前缀, 那么就可以直接跳过i之前的字符, 减少回退次数.</p>
+<p>也正因如此, 只需要将 <code>j</code> 每次赋值为 <code>lps[j-1]</code> 直至回退到0就行.</p>
+<p>接下来, 我们来看下如何求出 <code>lps</code> 数组.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 假设已经包括了头文件 &lt;string&gt; &lt;vector&gt;</span></span><br><span class="line"><span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">compute_lps</span><span class="params">(<span class="type">const</span> string &amp;pattern)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> length = <span class="number">0</span>; <span class="comment">// 前一个LPS的长度</span></span><br><span class="line">    <span class="type">int</span> i = <span class="number">1</span>;</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">lps</span><span class="params">(pattern.length(), <span class="number">0</span>)</span></span>;   <span class="comment">// 初始化lps数组</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// lps[0] 始终为0, 所以 i 的初始值为1</span></span><br><span class="line">    <span class="keyword">while</span> (i &lt; pattern.<span class="built_in">length</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (pattern[i] == pattern[length])</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 匹配上则更新length和lps[i]</span></span><br><span class="line">            <span class="comment">// 因为pattern[0: length]是和pattern[i-length: i]相同的, 所以只要比较一个值</span></span><br><span class="line">            length++;</span><br><span class="line">            lps[i] = length;</span><br><span class="line">            i++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (length != <span class="number">0</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">// 匹配不上, 则回退length, 并且更新lps[i]</span></span><br><span class="line">                <span class="comment">// 这和KMP算法本身也是很相像的</span></span><br><span class="line">                length = lps[length - <span class="number">1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                lps[i] = <span class="number">0</span>; </span><br><span class="line">                <span class="comment">// 也可以写作 lps[i] = length; 与上面保持统一.</span></span><br><span class="line">                i++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> lps;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="主算法"><a class="markdownIt-Anchor" href="#主算法"></a> 主算法</h3>
+<p>算出了 <code>lps</code> 数组, 那么KMP算法实现就显得异常轻松了.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">kmp_search</span><span class="params">(<span class="type">const</span> string &amp;text, <span class="type">const</span> string &amp;pattern)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; lps = <span class="built_in">compute_lps</span>(pattern);</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; result;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> i = <span class="number">0</span>; <span class="comment">// index for text[]</span></span><br><span class="line">    <span class="type">int</span> j = <span class="number">0</span>; <span class="comment">// index for pattern[]</span></span><br><span class="line">    <span class="keyword">while</span> (i &lt; text.<span class="built_in">length</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (pattern[j] == text[i])</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 匹配上就继续</span></span><br><span class="line">            j++;</span><br><span class="line">            i++;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (j == pattern.<span class="built_in">length</span>())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// j 匹配到了末尾, 说明找到了一个匹配, 添加到结果中, 并且回退j</span></span><br><span class="line">            result.<span class="built_in">push_back</span>(i - j);</span><br><span class="line">            j = lps[j - <span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (i &lt; text.<span class="built_in">length</span>() &amp;&amp; pattern[j] != text[i])</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 发生不匹配就回退j</span></span><br><span class="line">            <span class="keyword">if</span> (j != <span class="number">0</span>)</span><br><span class="line">                j = lps[j - <span class="number">1</span>];</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                i++;</span><br><span class="line">            <span class="comment">// 当lps的值为0时, 也就是j回退到了0, 则i继续前进, 否则回退j</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样我们就实现了完整的KMP算法了，其实还是挺简单的。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://jerry050512.github.io">Gang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://jerry050512.github.io/2024/04/15/data-structure-string/">https://jerry050512.github.io/2024/04/15/data-structure-string/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://jerry050512.github.io" target="_blank">Gang の blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/technology/">technology</a><a class="post-meta__tags" href="/tags/data-structure/">data structure</a><a class="post-meta__tags" href="/tags/algorithm/">algorithm</a><a class="post-meta__tags" href="/tags/C/">C++</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/05/12/data-structure-exp-DNA-match/" title="数据结构实验 - DNA序列匹配"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">数据结构实验 - DNA序列匹配</div></div></a></div><div class="next-post pull-right"><a href="/2024/04/13/vpteam-nn-question-one/" title="VPteam 神经网络任务 - 1"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">VPteam 神经网络任务 - 1</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/03/04/data-structure-chapter-1/" title="浙江技术选择性必修一 - 第一章 数据与数据的组织"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-04</div><div class="title">浙江技术选择性必修一 - 第一章 数据与数据的组织</div></div></a></div><div><a href="/2024/03/06/data-structure-chapter-2/" title="浙江技术选择性必修一 - 第二章 数组与链表"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-06</div><div class="title">浙江技术选择性必修一 - 第二章 数组与链表</div></div></a></div><div><a href="/2024/03/18/data-structure-chapter-3/" title="浙江技术选择性必修一 - 第三章 字符串、队列和栈"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-18</div><div class="title">浙江技术选择性必修一 - 第三章 字符串、队列和栈</div></div></a></div><div><a href="/2024/05/12/data-structure-exp-DNA-match/" title="数据结构实验 - DNA序列匹配"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-12</div><div class="title">数据结构实验 - DNA序列匹配</div></div></a></div><div><a href="/2024/05/12/data-structure-homework-1/" title="数据结构 - 作业一"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-12</div><div class="title">数据结构 - 作业一</div></div></a></div><div><a href="/2024/03/29/detailed-explanation-of-library-management-system/" title="数据结构 - 图书管理系统实现详解"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-29</div><div class="title">数据结构 - 图书管理系统实现详解</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Gang</div><div class="author-info__description">Hello World!</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">56</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Jerry050512"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Jerry050512" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:jerry050512@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">No Announcement now</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#bf-%E7%AE%97%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text"> BF 算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#kmp-%E7%AE%97%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text"> KMP 算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%84%E5%87%86%E5%A4%87-lps-%E6%95%B0%E7%BB%84"><span class="toc-number">2.1.</span> <span class="toc-text"> 预准备 - lps 数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E7%AE%97%E6%B3%95"><span class="toc-number">2.2.</span> <span class="toc-text"> 主算法</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/12/data-structure-homework-1/" title="数据结构 - 作业一">数据结构 - 作业一</a><time datetime="2024-05-12T11:45:01.828Z" title="更新于 2024-05-12 19:45:01">2024-05-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/12/data-structure-exp-DNA-match/" title="数据结构实验 - DNA序列匹配">数据结构实验 - DNA序列匹配</a><time datetime="2024-05-12T11:31:37.502Z" title="更新于 2024-05-12 19:31:37">2024-05-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/29/hexo-theme-config/" title="Hexo 主题配置">Hexo 主题配置</a><time datetime="2024-05-12T11:22:12.922Z" title="更新于 2024-05-12 19:22:12">2024-05-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2024 By Gang</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

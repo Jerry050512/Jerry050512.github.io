@@ -1,0 +1,253 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>在 `this.py` 中 `import this` | Gang の blog</title><meta name="author" content="Gang"><meta name="copyright" content="Gang"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="如题, 我们编写以下代码, 请问它的输出是什么呢? this.py12import thisprint(&quot;Hello World!&quot;)  标准库的this模块 this模块是Python标准库的一部分, 其实是Python的一个小彩蛋, 当你导入时会显示一首 Python之禅 的英文诗, 阐述了Python的设计与编程哲学. 其中的编写代码也很有趣, 使用了key为13的凯撒加">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在 &#96;this.py&#96; 中 &#96;import this&#96;">
+<meta property="og:url" content="https://jerry050512.github.io/2024/03/05/import-this-in-this-py/index.html">
+<meta property="og:site_name" content="Gang の blog">
+<meta property="og:description" content="如题, 我们编写以下代码, 请问它的输出是什么呢? this.py12import thisprint(&quot;Hello World!&quot;)  标准库的this模块 this模块是Python标准库的一部分, 其实是Python的一个小彩蛋, 当你导入时会显示一首 Python之禅 的英文诗, 阐述了Python的设计与编程哲学. 其中的编写代码也很有趣, 使用了key为13的凯撒加">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jerry050512.github.io/img/avatar.jpeg">
+<meta property="article:published_time" content="2024-03-05T12:30:17.000Z">
+<meta property="article:modified_time" content="2024-05-12T11:22:12.922Z">
+<meta property="article:author" content="Gang">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="this">
+<meta property="article:tag" content="import">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jerry050512.github.io/img/avatar.jpeg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://jerry050512.github.io/2024/03/05/import-this-in-this-py/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-P5BVKT9NTS"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-P5BVKT9NTS');
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: true
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '在 `this.py` 中 `import this`',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-05-12 19:22:12'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" type = "text/css" media="print" href="/css/print.css"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2194693109520236" crossorigin="anonymous"></script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">56</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/heart-16-9.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Gang の blog"><span class="site-name">Gang の blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">在 `this.py` 中 `import this`</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-03-05T12:30:17.000Z" title="发表于 2024-03-05 20:30:17">2024-03-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-05-12T11:22:12.922Z" title="更新于 2024-05-12 19:22:12">2024-05-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Interesting-Python-Things/">Interesting-Python-Things</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="在 `this.py` 中 `import this`"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>如题, 我们编写以下代码, 请问它的输出是什么呢?</p>
+<figure class="highlight python"><figcaption><span>this.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> this</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Hello World!&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="标准库的this模块"><a class="markdownIt-Anchor" href="#标准库的this模块"></a> 标准库的<code>this</code>模块</h2>
+<p><code>this</code>模块是Python标准库的一部分, 其实是Python的一个小彩蛋, 当你导入时会显示一首 Python之禅 的英文诗, 阐述了Python的设计与编程哲学.</p>
+<p>其中的编写代码也很有趣, 使用了key为13的凯撒加密, 感兴趣的可以自行研究, <a href="#the-zen-of-python">The Zen of Python</a> 的原文将放置在文章末尾.</p>
+<h2 id="这里代码的结果"><a class="markdownIt-Anchor" href="#这里代码的结果"></a> 这里代码的结果</h2>
+<p>实际上, 运行结果当然不是这首小诗, 而是:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Hello World!</span><br><span class="line">Hello World!</span><br></pre></td></tr></table></figure>
+<p>那么, 为什么会出现两次 Hello World 呢? 这就得从 Python 的导入规则讲起.</p>
+<h2 id="python-的模块导入规则"><a class="markdownIt-Anchor" href="#python-的模块导入规则"></a> Python 的模块导入规则</h2>
+<p>首先, 我们可以去查询一下<a target="_blank" rel="noopener" href="https://docs.python.org/3/reference/import.html">文档</a>.</p>
+<p>Python的导入机制工作原理如下：</p>
+<ul>
+<li><strong>导入语句</strong>：当你使用import语句时，Python会执行两个操作：搜索指定的模块，然后将搜索结果绑定到本地作用域的一个名称上。</li>
+<li><strong>模块搜索</strong>：Python会在一系列预定义的位置搜索模块，这些位置包括内置模块、sys.path中的目录以及包。</li>
+<li><strong>模块缓存</strong>：如果模块已经被导入，Python会使用sys.modules缓存中的模块，而不是重新加载模块。</li>
+<li><strong>模块执行</strong>：一旦找到并加载了模块，模块中的所有顶层代码都会被执行。</li>
+</ul>
+<h2 id="原理解析"><a class="markdownIt-Anchor" href="#原理解析"></a> 原理解析</h2>
+<h3 id="import-this"><a class="markdownIt-Anchor" href="#import-this"></a> <code>import this</code></h3>
+<p>运行第一行时, 实际上先进行模块搜索, 具体原理在文档的<a target="_blank" rel="noopener" href="https://docs.python.org/3/reference/import.html#finders-and-loaders">这里</a>.</p>
+<blockquote>
+<p>Python includes a number of default finders and importers. The first one knows how to locate <strong>built-in modules</strong>, and the second knows how to locate <strong>frozen modules</strong>. A third default finder searches an <strong>import path</strong> for modules. The import path is a list of locations that may name file system paths or zip files. It can also be extended to search for any locatable resource, such as those identified by URLs.</p>
+</blockquote>
+<p>也就是说, 搜索顺序是:</p>
+<ul>
+<li>内置模块</li>
+<li>Frozen Modules (我也不清楚怎么翻译, 大概就是被打包好的可执行模块)</li>
+<li><code>sys.path</code> 中的目录
+<ul>
+<li>Python 执行的入口文件所在的路径</li>
+<li>系统的环境变量 <code>$PYTHONPATH</code> 所表示的目录</li>
+<li><code>site</code> 路径，也就是 <code>python3.5/Lib/site-packages</code> 这种。</li>
+</ul>
+</li>
+</ul>
+<p>那么, 问题来了, <code>this</code> 难道不是一个内置模块吗? 为什么还要搜索 <code>sys.path</code> , 最终定位到了文件自身呢?</p>
+<p>这时, 我们就应该验证一下, 打开 Python 解释器, 输出一下 <code>time</code> 和 <code>this</code> 看看.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>time</span><br><span class="line">&lt;module <span class="string">&#x27;time&#x27;</span> (built-<span class="keyword">in</span>)&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>this</span><br><span class="line">&lt;module <span class="string">&#x27;this&#x27;</span> <span class="keyword">from</span> <span class="string">&#x27;C:\\Users\\Gang\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\this.py&#x27;</span>&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="built-in-modules-与-standard-library"><a class="markdownIt-Anchor" href="#built-in-modules-与-standard-library"></a> Built-in Modules 与 Standard Library</h3>
+<p>所以, 这里就涉及到一些概念的区分了, 我们查看<a target="_blank" rel="noopener" href="https://docs.python.org/3/library/index.html">标准库文档</a>可以看到:</p>
+<blockquote>
+<p><strong>Python’s standard library</strong> is very extensive, offering a wide range of facilities as indicated by the long table of contents listed below. The library contains <strong>built-in modules (written in C)</strong> that provide access to system functionality such as file I/O that would otherwise be inaccessible to Python programmers, as well as modules written in Python that provide standardized solutions for many problems that occur in everyday programming.</p>
+</blockquote>
+<p>也就是说只有内置模块是用C语言编写的, 而标准库中的其他模块则是由 Python 编写的, 正因如此, this并不是一个内置模块, 而是由 Python 编写的标准库模块. 从而导致 this 最终被定位到了文件自身.</p>
+<h3 id="递归"><a class="markdownIt-Anchor" href="#递归"></a> 递归</h3>
+<p>写过递归函数的朋友都知道, 像下面这样的函数是会达到 Python 的递归深度限制的:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">hello</span>():</span><br><span class="line">    hello()</span><br></pre></td></tr></table></figure>
+<p>那么为什么没有反复导入模块本身造成无限循环呢?</p>
+<p>其实在上面的搜索过程中还有一点没有说, 那就是查找最初的开始地点是模块缓存, 也就是说每次导入时 Python 会先检查 <code>sys.modules</code> 是否已经存在该模块, 存在则直接返回, 不会再次导入.</p>
+<p>这样就能解释为什么只有两个 Hello World了, 因为第一个是导入模块自身时, 再次运行到import由于检查到缓存从而运行到第二行的 Hello World, 第二个则是运行模块自身时的输出.</p>
+<h2 id="小结"><a class="markdownIt-Anchor" href="#小结"></a> 小结</h2>
+<p>写这么多, 其实还是想提醒大家一件事, 那就是记得不要把文件名给命名成要用到的 Python 模块名了😂😂😂</p>
+<h2 id="the-zen-of-python"><a class="markdownIt-Anchor" href="#the-zen-of-python"></a> The Zen of Python</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">The Zen of Python, by Tim Peters</span><br><span class="line"></span><br><span class="line">Beautiful is better than ugly.</span><br><span class="line">Explicit is better than implicit.</span><br><span class="line">Simple is better than complex.</span><br><span class="line">Complex is better than complicated.</span><br><span class="line">Flat is better than nested.</span><br><span class="line">Sparse is better than dense.</span><br><span class="line">Readability counts.</span><br><span class="line">Special cases aren&#x27;t special enough to break the rules.</span><br><span class="line">Although practicality beats purity.</span><br><span class="line">Errors should never pass silently.</span><br><span class="line">Unless explicitly silenced.</span><br><span class="line">Now is better than never.</span><br><span class="line">Although never is often better than *right* now.</span><br><span class="line">If the implementation is hard to explain, it&#x27;s a bad idea.</span><br><span class="line">If the implementation is easy to explain, it may be a good idea.</span><br><span class="line">Namespaces are one honking great idea -- let&#x27;s do more of those!</span><br></pre></td></tr></table></figure>
+<p>给一个 Copilot 的翻译版本:</p>
+<p><strong>Python之禅</strong><br />
+作者：Tim Peters</p>
+<p>优美胜于丑陋。 显式优于隐式。<br />
+简单优于复杂。 复杂总比复杂好。<br />
+扁平优于嵌套。 稀疏优于密集。<br />
+可读性很重要。 特殊情况不足以打破规则。<br />
+尽管实用性胜过纯洁性。 错误不应该默默过去。<br />
+除非明确沉默。 现在做总比不做好。<br />
+虽然从不做往往比马上做好。<br />
+如果实现难以解释，那是个坏主意。<br />
+如果实现易于解释，可能是个好主意。<br />
+命名空间是个好主意——让我们做更多这样的事！</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://jerry050512.github.io">Gang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://jerry050512.github.io/2024/03/05/import-this-in-this-py/">https://jerry050512.github.io/2024/03/05/import-this-in-this-py/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://jerry050512.github.io" target="_blank">Gang の blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Python/">Python</a><a class="post-meta__tags" href="/tags/this/">this</a><a class="post-meta__tags" href="/tags/import/">import</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/03/06/data-structure-chapter-2/" title="浙江技术选择性必修一 - 第二章 数组与链表"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">浙江技术选择性必修一 - 第二章 数组与链表</div></div></a></div><div class="next-post pull-right"><a href="/2024/03/04/data-structure-chapter-1/" title="浙江技术选择性必修一 - 第一章 数据与数据的组织"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">浙江技术选择性必修一 - 第一章 数据与数据的组织</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/03/04/data-structure-chapter-1/" title="浙江技术选择性必修一 - 第一章 数据与数据的组织"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-04</div><div class="title">浙江技术选择性必修一 - 第一章 数据与数据的组织</div></div></a></div><div><a href="/2024/03/06/data-structure-chapter-2/" title="浙江技术选择性必修一 - 第二章 数组与链表"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-06</div><div class="title">浙江技术选择性必修一 - 第二章 数组与链表</div></div></a></div><div><a href="/2024/03/18/data-structure-chapter-3/" title="浙江技术选择性必修一 - 第三章 字符串、队列和栈"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-18</div><div class="title">浙江技术选择性必修一 - 第三章 字符串、队列和栈</div></div></a></div><div><a href="/2024/02/09/vpteam-learning/" title="VPteam 學習記錄"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-02-09</div><div class="title">VPteam 學習記錄</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Gang</div><div class="author-info__description">Hello World!</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">56</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Jerry050512"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Jerry050512" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:jerry050512@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">No Announcement now</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%87%E5%87%86%E5%BA%93%E7%9A%84this%E6%A8%A1%E5%9D%97"><span class="toc-number">1.</span> <span class="toc-text"> 标准库的this模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%99%E9%87%8C%E4%BB%A3%E7%A0%81%E7%9A%84%E7%BB%93%E6%9E%9C"><span class="toc-number">2.</span> <span class="toc-text"> 这里代码的结果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#python-%E7%9A%84%E6%A8%A1%E5%9D%97%E5%AF%BC%E5%85%A5%E8%A7%84%E5%88%99"><span class="toc-number">3.</span> <span class="toc-text"> Python 的模块导入规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90"><span class="toc-number">4.</span> <span class="toc-text"> 原理解析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#import-this"><span class="toc-number">4.1.</span> <span class="toc-text"> import this</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#built-in-modules-%E4%B8%8E-standard-library"><span class="toc-number">4.2.</span> <span class="toc-text"> Built-in Modules 与 Standard Library</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%92%E5%BD%92"><span class="toc-number">4.3.</span> <span class="toc-text"> 递归</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">5.</span> <span class="toc-text"> 小结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#the-zen-of-python"><span class="toc-number">6.</span> <span class="toc-text"> The Zen of Python</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/12/data-structure-homework-1/" title="数据结构 - 作业一">数据结构 - 作业一</a><time datetime="2024-05-12T11:45:01.828Z" title="更新于 2024-05-12 19:45:01">2024-05-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/12/data-structure-exp-DNA-match/" title="数据结构实验 - DNA序列匹配">数据结构实验 - DNA序列匹配</a><time datetime="2024-05-12T11:31:37.502Z" title="更新于 2024-05-12 19:31:37">2024-05-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/29/hexo-theme-config/" title="Hexo 主题配置">Hexo 主题配置</a><time datetime="2024-05-12T11:22:12.922Z" title="更新于 2024-05-12 19:22:12">2024-05-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2024 By Gang</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

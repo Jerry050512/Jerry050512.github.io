@@ -1,0 +1,225 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Res-Net 论文精读 | Gang の blog</title><meta name="author" content="Gang"><meta name="copyright" content="Gang"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="本文将对 Res-Net 论文进行精读, 初次阅读, 难免有错误或者理解粗浅的地方, 欢迎指正.  Abstract  Deeper neural networks are more difficult to train. We present a residual learning framework to ease the training of networks that are subst">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Res-Net 论文精读">
+<meta property="og:url" content="https://jerry050512.github.io/2024/03/21/res-net-paper-intensive-reading/index.html">
+<meta property="og:site_name" content="Gang の blog">
+<meta property="og:description" content="本文将对 Res-Net 论文进行精读, 初次阅读, 难免有错误或者理解粗浅的地方, 欢迎指正.  Abstract  Deeper neural networks are more difficult to train. We present a residual learning framework to ease the training of networks that are subst">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jerry050512.github.io/img/avatar.jpeg">
+<meta property="article:published_time" content="2024-03-21T09:15:27.000Z">
+<meta property="article:modified_time" content="2024-05-12T11:22:12.922Z">
+<meta property="article:author" content="Gang">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="ResNet">
+<meta property="article:tag" content="paper">
+<meta property="article:tag" content="Deep Learning">
+<meta property="article:tag" content="Nerual Network">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jerry050512.github.io/img/avatar.jpeg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://jerry050512.github.io/2024/03/21/res-net-paper-intensive-reading/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-P5BVKT9NTS"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-P5BVKT9NTS');
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: true
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Res-Net 论文精读',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-05-12 19:22:12'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" type = "text/css" media="print" href="/css/print.css"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2194693109520236" crossorigin="anonymous"></script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">56</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/heart-16-9.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Gang の blog"><span class="site-name">Gang の blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Res-Net 论文精读</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-03-21T09:15:27.000Z" title="发表于 2024-03-21 17:15:27">2024-03-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-05-12T11:22:12.922Z" title="更新于 2024-05-12 19:22:12">2024-05-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-Learning/">AI-Learning</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Res-Net 论文精读"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>本文将对 Res-Net 论文进行精读, 初次阅读, 难免有错误或者理解粗浅的地方, 欢迎指正.</p>
+<h2 id="abstract"><a class="markdownIt-Anchor" href="#abstract"></a> Abstract</h2>
+<blockquote>
+<p>Deeper neural networks are more difficult to train. We present a <strong>residual learning framework</strong> to ease the training of networks that are substantially deeper than those used previously. We explicitly <em>reformulate</em> the layers as learning residual <em>functions with reference to the layer inputs</em>, instead of learning <em>unreferenced functions</em>. We provide <em>comprehensive empirical evidence</em> showing that these residual networks are easier to optimize,and can gain accuracy from considerably increased depth. On the <strong>ImageNet dataset</strong> we evaluate residual nets with a depth of up to 152 layers — 8×deeper than <strong>VGG nets</strong> [41] but still having lower complexity. An <em>ensemble</em> of these residual nets achieves 3.57% error on the ImageNet test set. This result won the 1st place on the <strong>ILSVRC</strong> 2015 classification task. We also present analysis on <strong>CIFAR-10</strong> with 100 and 1000 layers.</p>
+<p>The depth of representations is of central importance for many visual recognition tasks. <em>Solely</em> due to our extremely deep representations, we obtain a 28% relative improvement on the <strong>COCO object detection dataset</strong>. Deep residual nets are foundations of our submissions to ILSVRC &amp; COCO 2015 competitions[<sup>1</sup>], where we also won the 1st places on the tasks of ImageNet detection, ImageNet localization, COCO detection, and COCO segmentation.</p>
+</blockquote>
+<h3 id="translation"><a class="markdownIt-Anchor" href="#translation"></a> Translation</h3>
+<p>更深的神经网络更难训练。我们提出了一种残差学习框架,以便于训练比以前使用的网络深得多的网络。我们明确地将层重新表述为学习残差函数,而不是学习无参考的函数,并以层输入作为参考。我们提供了全面的实证结果,表明这些残差网络更容易优化,并且可以从大幅增加的深度获得精度提升。在ImageNet数据集上,我们评估了最深达152层的残差网络 - 比VGG网络深8倍,但复杂度反而更低。这些残差网络的一个集成取得了3.57%的ImageNet测试集错误率。这个结果赢得了2015年ILSVRC分类任务的第一名。我们还在CIFAR-10数据集上分析了100层和1000层的网络。</p>
+<p>表示的深度对于许多视觉识别任务至关重要。仅凭我们极深的表征,我们在COCO对象检测数据集上获得了28%的相对改进。深度残差网络是我们参加ILSVRC和COCO 2015竞赛的基础,我们也在ImageNet检测、ImageNet定位、COCO检测和COCO分割任务中获得了第一名。</p>
+<h3 id="词汇解释"><a class="markdownIt-Anchor" href="#词汇解释"></a> 词汇解释</h3>
+<p><em>reformulate</em>:重新表述、重新阐述</p>
+<p><em>functions with reference to the layer inputs</em>:以层输入作为参考的函数</p>
+<p><em>unreferenced functions</em>:无参考的函数,指没有明确参考输入的函数</p>
+<p><em>comprehensive empirical evidence</em>:全面的实证结果,通过实验得到的证据</p>
+<p><em>ensemble</em>:集成,将多个模型的预测结果结合起来</p>
+<p><em>Solely</em>:仅仅,只不过是</p>
+<h3 id="专业术语"><a class="markdownIt-Anchor" href="#专业术语"></a> 专业术语</h3>
+<p><strong>residual learning framework</strong>:残差学习框架,将神经网络层重新参数化为学习残差映射,而不是学习原始的映射。这种方法缓解了深层网络的梯度消失问题,使深层网络更容易训练。</p>
+<p><strong>ImageNet dataset</strong>:ImageNet数据集,一个著名的大规模图像分类数据集,包含1000个类别,数百万张图像。在计算机视觉领域被广泛用于训练和评估模型。</p>
+<p><strong>VGG nets</strong>:VGGNet,由牛津大学计算机视觉组提出的经典卷积神经网络模型,在ImageNet等数据集上表现优异,但网络较浅。</p>
+<p><strong>ILSVRC</strong>:ImageNet大规模视觉识别挑战赛(ILSVRC),是一项针对图像分类、目标检测、目标定位等任务的著名年度比赛,使用ImageNet数据集。</p>
+<p><strong>CIFAR-10</strong>:CIFAR-10数据集,一个小规模的图像分类数据集,包含10个类别,6万张32x32的小图像。通常用于测试和调试模型。</p>
+<p><strong>COCO object detection dataset</strong>:COCO目标检测数据集,由微软等机构共同推出的一个大规模目标检测、语义分割等任务的数据集,包含33万张图像及8000万个标注。</p>
+<h2 id="1-introduction"><a class="markdownIt-Anchor" href="#1-introduction"></a> 1. Introduction</h2>
+<blockquote>
+<p>Deep <em>convolutional neural networks</em> [22, 21] have led to a series of breakthroughs for image classification [21,50, 40]. Deep networks naturally integrate low/mid/highlevel features [50] and classifiers in an <strong>end-to-end</strong> multilayer fashion, and the “levels” of features can be enriched by the number of stacked layers (depth). Recent evidence[41, 44] reveals that network depth is of crucial importance,and the leading results [41, 44, 13, 16] on the challenging ImageNet dataset [36] all exploit “very deep” [41] models, with a depth of sixteen [41] to thirty [16]. Many other <strong>nontrivial</strong> visual recognition tasks [8, 12, 7, 32, 27] have also greatly benefited from very deep models.</p>
+</blockquote>
+<p>深度卷积神经网络[22,21]带来了一系列图像分类[21,50,40]的突破。深度网络以端到端的多层方式自然集成了低/中/高层特征[50]和分类器,通过堆叠层数(深度)可以丰富&quot;层次&quot;特征。最新证据[41,44]显示,网络深度至关重要,在具有挑战性的ImageNet数据集[36]上取得领先结果[41,44,13,16]都利用了&quot;非常深&quot;[41]的模型,深度从16层[41]到30层[16]不等。许多其他重要的视觉识别任务[8,12,7,32,27]也从非常深的模型中获益良多。</p>
+<blockquote>
+<p>Driven by the significance of depth, a question arises: Is learning better networks as easy as stacking more layers? An <em>obstacle</em> to answering this question was the <strong>notorious</strong> problem of <strong>vanishing/exploding gradients</strong> [1, 9], which <strong>hamper convergence</strong> from the beginning. This problem, however, has been largely addressed by normalized initialization [23, 9, 37, 13] and intermediate normalization layers[16], which enable networks with tens of layers to start <strong>converging</strong> for <strong>stochastic gradient descent (SGD)</strong> with <strong>backpropagation</strong> [22].</p>
+<p>When deeper networks are able to start converging, a <strong>degradation problem</strong> has been exposed: with the network depth increasing, accuracy gets <em>saturated</em> (which might be unsurprising) and then degrades rapidly. Unexpectedly, such degradation is not caused by <strong>overfitting</strong>, and adding more layers to a suitably deep model leads to higher training error, as reported in [11, 42] and thoroughly verified by our experiments. Fig. 1 shows a typical example.</p>
+</blockquote>
+<p>由于深度的重要性,一个问题随之而来:学习更好的网络是否就像堆叠更多层那么简单?回答这个问题的一个障碍是臭名昭著的梯度消失/爆炸问题[1,9],这阻碍了训练过程一开始就收敛。然而,这个问题已经被规范化初始化[23,9,37,13]和中间归一化层[16]很大程度上解决了,它们使得具有数十层的网络能够开始为随机梯度下降(SGD)与反向传播[22]收敛。</p>
+<p>当更深的网络能够开始收敛时,一个退化问题暴露出来:随着网络深度的增加,精度会饱和(这可能并不奇怪),然后迅速降解。出乎意料的是,这种降解并非由过拟合引起,给一个足够深的模型添加更多层会导致更高的训练误差,如[11,42]所报告并经过我们的实验彻底验证。图1显示了一个典型的例子。</p>
+<blockquote>
+<p>The degradation (of training accuracy) indicates that not all systems are similarly easy to optimize. Let us consider a shallower architecture and its deeper <strong>counterpart</strong> that adds more layers onto it. There exists a solution by construction to the deeper model: the added layers are <strong>identity mapping</strong>, and the other layers are copied from the learned shallower model. The existence of this constructed solution indicates that a deeper model should produce no higher training error than its shallower counterpart. But experiments show that our current solvers on hand are unable to find solutions that are comparably good or better than the constructed solution(or unable to do so in <em>feasible</em> time).</p>
+</blockquote>
+<p>训练精度的降解表明,并非所有系统都同样容易优化。让我们考虑一个较浅的架构及其通过添加更多层而得到的更深的对应体。通过构造,对于更深的模型存在一个解决方案:添加的层是恒等映射,其他层则从学习到的浅层模型复制而来。这种构造解的存在表明,更深的模型不应产生比其浅层对应体更高的训练误差。但实验表明,我们现有的求解器无法找到与构造解一样好或更好的解(或者无法在可行的时间内做到这一点)。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://jerry050512.github.io">Gang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://jerry050512.github.io/2024/03/21/res-net-paper-intensive-reading/">https://jerry050512.github.io/2024/03/21/res-net-paper-intensive-reading/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://jerry050512.github.io" target="_blank">Gang の blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/AI/">AI</a><a class="post-meta__tags" href="/tags/ResNet/">ResNet</a><a class="post-meta__tags" href="/tags/paper/">paper</a><a class="post-meta__tags" href="/tags/Deep-Learning/">Deep Learning</a><a class="post-meta__tags" href="/tags/Nerual-Network/">Nerual Network</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/03/29/detailed-explanation-of-library-management-system/" title="数据结构 - 图书管理系统实现详解"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">数据结构 - 图书管理系统实现详解</div></div></a></div><div class="next-post pull-right"><a href="/2024/03/20/install-macos-in-vmware/" title="在 VMware 中安装黑苹果 (MacOS)"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">在 VMware 中安装黑苹果 (MacOS)</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/02/09/vpteam-learning/" title="VPteam 學習記錄"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-02-09</div><div class="title">VPteam 學習記錄</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Gang</div><div class="author-info__description">Hello World!</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">56</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Jerry050512"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Jerry050512" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:jerry050512@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">No Announcement now</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#abstract"><span class="toc-number">1.</span> <span class="toc-text"> Abstract</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#translation"><span class="toc-number">1.1.</span> <span class="toc-text"> Translation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%8D%E6%B1%87%E8%A7%A3%E9%87%8A"><span class="toc-number">1.2.</span> <span class="toc-text"> 词汇解释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%93%E4%B8%9A%E6%9C%AF%E8%AF%AD"><span class="toc-number">1.3.</span> <span class="toc-text"> 专业术语</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-introduction"><span class="toc-number">2.</span> <span class="toc-text"> 1. Introduction</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/12/data-structure-homework-1/" title="数据结构 - 作业一">数据结构 - 作业一</a><time datetime="2024-05-12T11:45:01.828Z" title="更新于 2024-05-12 19:45:01">2024-05-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/12/data-structure-exp-DNA-match/" title="数据结构实验 - DNA序列匹配">数据结构实验 - DNA序列匹配</a><time datetime="2024-05-12T11:31:37.502Z" title="更新于 2024-05-12 19:31:37">2024-05-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/29/hexo-theme-config/" title="Hexo 主题配置">Hexo 主题配置</a><time datetime="2024-05-12T11:22:12.922Z" title="更新于 2024-05-12 19:22:12">2024-05-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2024 By Gang</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
