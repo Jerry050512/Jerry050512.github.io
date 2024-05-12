@@ -1,0 +1,46 @@
+<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>/* 设置页边距 */
+@page {
+    margin: 1cm;
+}
+
+/* 隐藏不需要打印的元素 */
+.nav,
+.sidebar,
+.comments, 
+.post-bg, 
+.aside-content, 
+.relatedPosts {
+    display: none!important;
+}
+
+/* 修改文字和链接样式 */
+body {
+    font-size: 12pt;
+    line-height: 1.5;
+}
+
+a {
+    font-weight: bolder;
+    text-decoration: none;
+}
+
+/* 代码块样式 */
+pre {
+    border: solid 1px #555;
+    page-break-inside: avoid;
+}
+
+/* 标题样式 */
+h1 {
+    page-break-before: always;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    page-break-after: avoid;
+    line-height: 1.2;
+}
