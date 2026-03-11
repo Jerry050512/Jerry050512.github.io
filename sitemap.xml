@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://jerry050512.github.io/2026/03/11/zig-objects-and-data-types/</loc>
+    
+    <lastmod>2026-03-11</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://jerry050512.github.io/about/index.html</loc>
     
     <lastmod>2026-03-11</lastmod>
@@ -92,7 +101,7 @@
   </url>
   
   <url>
-    <loc>https://jerry050512.github.io/2024/03/05/import-this-in-this-py/</loc>
+    <loc>https://jerry050512.github.io/2024/02/29/hexo-theme-config/</loc>
     
     <lastmod>2026-03-10</lastmod>
     
@@ -101,7 +110,7 @@
   </url>
   
   <url>
-    <loc>https://jerry050512.github.io/2024/02/29/hexo-theme-config/</loc>
+    <loc>https://jerry050512.github.io/2024/03/05/import-this-in-this-py/</loc>
     
     <lastmod>2026-03-10</lastmod>
     
@@ -119,7 +128,7 @@
   </url>
   
   <url>
-    <loc>https://jerry050512.github.io/2024/02/08/hello-world/</loc>
+    <loc>https://jerry050512.github.io/2024/03/17/flutter-budswitch-project/</loc>
     
     <lastmod>2026-03-10</lastmod>
     
@@ -128,7 +137,7 @@
   </url>
   
   <url>
-    <loc>https://jerry050512.github.io/2024/03/17/flutter-budswitch-project/</loc>
+    <loc>https://jerry050512.github.io/2024/02/08/hello-world/</loc>
     
     <lastmod>2026-03-10</lastmod>
     
@@ -146,7 +155,7 @@
   </url>
   
   <url>
-    <loc>https://jerry050512.github.io/2024/03/18/differences-between-cpp-and-c/</loc>
+    <loc>https://jerry050512.github.io/2024/03/29/detailed-explanation-of-library-management-system/</loc>
     
     <lastmod>2026-03-10</lastmod>
     
@@ -155,7 +164,7 @@
   </url>
   
   <url>
-    <loc>https://jerry050512.github.io/2024/03/29/detailed-explanation-of-library-management-system/</loc>
+    <loc>https://jerry050512.github.io/2024/03/18/differences-between-cpp-and-c/</loc>
     
     <lastmod>2026-03-10</lastmod>
     
@@ -290,35 +299,28 @@
 
   
   <url>
-    <loc>https://jerry050512.github.io/tags/computer/</loc>
+    <loc>https://jerry050512.github.io/tags/math/</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://jerry050512.github.io/tags/Windows/</loc>
+    <loc>https://jerry050512.github.io/tags/python/</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://jerry050512.github.io/tags/repair/</loc>
+    <loc>https://jerry050512.github.io/tags/pygame/</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://jerry050512.github.io/tags/emergency/</loc>
-    <lastmod>2026-03-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jerry050512.github.io/tags/disk/</loc>
+    <loc>https://jerry050512.github.io/tags/recursive/</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -354,41 +356,6 @@
   
   <url>
     <loc>https://jerry050512.github.io/tags/English/</loc>
-    <lastmod>2026-03-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jerry050512.github.io/tags/math/</loc>
-    <lastmod>2026-03-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jerry050512.github.io/tags/python/</loc>
-    <lastmod>2026-03-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jerry050512.github.io/tags/pygame/</loc>
-    <lastmod>2026-03-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jerry050512.github.io/tags/recursive/</loc>
-    <lastmod>2026-03-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jerry050512.github.io/tags/network/</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -444,6 +411,48 @@
   </url>
   
   <url>
+    <loc>https://jerry050512.github.io/tags/computer/</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jerry050512.github.io/tags/Windows/</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jerry050512.github.io/tags/repair/</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jerry050512.github.io/tags/emergency/</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jerry050512.github.io/tags/disk/</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jerry050512.github.io/tags/network/</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://jerry050512.github.io/tags/DNA/</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -486,14 +495,14 @@
   </url>
   
   <url>
-    <loc>https://jerry050512.github.io/tags/Programming/</loc>
+    <loc>https://jerry050512.github.io/tags/Library/</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://jerry050512.github.io/tags/Library/</loc>
+    <loc>https://jerry050512.github.io/tags/Programming/</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -549,20 +558,6 @@
   </url>
   
   <url>
-    <loc>https://jerry050512.github.io/tags/this/</loc>
-    <lastmod>2026-03-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jerry050512.github.io/tags/import/</loc>
-    <lastmod>2026-03-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://jerry050512.github.io/tags/Hexo/</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -598,6 +593,20 @@
   </url>
   
   <url>
+    <loc>https://jerry050512.github.io/tags/this/</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jerry050512.github.io/tags/import/</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://jerry050512.github.io/tags/VMware/</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -626,6 +635,27 @@
   </url>
   
   <url>
+    <loc>https://jerry050512.github.io/tags/Study/</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jerry050512.github.io/tags/AI/</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jerry050512.github.io/tags/Artificial-Intelligence/</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://jerry050512.github.io/tags/ResNet/</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -641,13 +671,6 @@
   
   <url>
     <loc>https://jerry050512.github.io/tags/Deep-Learning/</loc>
-    <lastmod>2026-03-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jerry050512.github.io/tags/AI/</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -682,20 +705,6 @@
   </url>
   
   <url>
-    <loc>https://jerry050512.github.io/tags/Study/</loc>
-    <lastmod>2026-03-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jerry050512.github.io/tags/Artificial-Intelligence/</loc>
-    <lastmod>2026-03-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://jerry050512.github.io/tags/Zig/</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -723,14 +732,35 @@
     <priority>0.2</priority>
   </url>
   
-
-  
   <url>
-    <loc>https://jerry050512.github.io/categories/Computer-Emergency-Guide/</loc>
+    <loc>https://jerry050512.github.io/tags/language/</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
+  
+  <url>
+    <loc>https://jerry050512.github.io/tags/programming/</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jerry050512.github.io/tags/objects/</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jerry050512.github.io/tags/data-types/</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+
   
   <url>
     <loc>https://jerry050512.github.io/categories/AI-Things/</loc>
@@ -747,7 +777,7 @@
   </url>
   
   <url>
-    <loc>https://jerry050512.github.io/categories/Data-Structure-and-Algorithm-Analysis/</loc>
+    <loc>https://jerry050512.github.io/categories/Computer-Emergency-Guide/</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -755,6 +785,13 @@
   
   <url>
     <loc>https://jerry050512.github.io/categories/High-School-Technology-Book/Data-and-Data-Structure/</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jerry050512.github.io/categories/Data-Structure-and-Algorithm-Analysis/</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
