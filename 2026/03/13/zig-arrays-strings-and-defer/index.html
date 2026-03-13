@@ -1,0 +1,416 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>【Zig 入门】数组、字符串与内存管理 | Gang の blog</title><meta name="author" content="Gang"><meta name="copyright" content="Gang"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="承接前文 在上一篇文章中，我们深入了解了 Zig 的基础知识：如何声明变量、理解数据类型，以及掌握代码块和作用域的概念。我们了解到 Zig 是一门强调显式优于隐式的语言，编译器的严格检查帮助我们在编译期就发现潜在问题。 今天，我们将继续 Zig 的学习之旅，探索三个核心主题：  数组（Arrays） - 固定大小的同类型数据集合 字符串（Strings） - Zig 中特殊的字节序列 内存管理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Zig 入门】数组、字符串与内存管理">
+<meta property="og:url" content="https://jerry050512.github.io/2026/03/13/zig-arrays-strings-and-defer/index.html">
+<meta property="og:site_name" content="Gang の blog">
+<meta property="og:description" content="承接前文 在上一篇文章中，我们深入了解了 Zig 的基础知识：如何声明变量、理解数据类型，以及掌握代码块和作用域的概念。我们了解到 Zig 是一门强调显式优于隐式的语言，编译器的严格检查帮助我们在编译期就发现潜在问题。 今天，我们将继续 Zig 的学习之旅，探索三个核心主题：  数组（Arrays） - 固定大小的同类型数据集合 字符串（Strings） - Zig 中特殊的字节序列 内存管理">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jerry050512.github.io/img/avatar.jpeg">
+<meta property="article:published_time" content="2026-03-13T08:42:00.000Z">
+<meta property="article:modified_time" content="2026-03-13T08:47:34.320Z">
+<meta property="article:author" content="Gang">
+<meta property="article:tag" content="Zig">
+<meta property="article:tag" content="language">
+<meta property="article:tag" content="programming">
+<meta property="article:tag" content="arrays">
+<meta property="article:tag" content="strings">
+<meta property="article:tag" content="memory">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jerry050512.github.io/img/avatar.jpeg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "【Zig 入门】数组、字符串与内存管理",
+  "url": "https://jerry050512.github.io/2026/03/13/zig-arrays-strings-and-defer/",
+  "image": "https://jerry050512.github.io/img/avatar.jpeg",
+  "datePublished": "2026-03-13T08:42:00.000Z",
+  "dateModified": "2026-03-13T08:47:34.320Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Gang",
+      "url": "https://jerry050512.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://jerry050512.github.io/2026/03/13/zig-arrays-strings-and-defer/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-P5BVKT9NTS"></script><script>window.dataLayer = window.dataLayer || []
+function gtag(){dataLayer.push(arguments)}
+gtag('js', new Date())
+gtag('config', 'G-P5BVKT9NTS')
+btf.addGlobalFn('pjaxComplete', () => {
+  gtag('config', 'G-P5BVKT9NTS', {'page_path': window.location.pathname})
+}, 'google_analytics')
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: true
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '【Zig 入门】数组、字符串与内存管理',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" type = "text/css" media="print" href="/css/print.css"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2194693109520236" crossorigin="anonymous"></script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">31</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">70</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/heart-16-9.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Gang の blog</span></a><a class="nav-page-title" href="/"><span class="site-name">【Zig 入门】数组、字符串与内存管理</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">【Zig 入门】数组、字符串与内存管理</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-03-13T08:42:00.000Z" title="发表于 2026-03-13 16:42:00">2026-03-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-03-13T08:47:34.320Z" title="更新于 2026-03-13 16:47:34">2026-03-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Zig/">Zig</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="承接前文"><a class="markdownIt-Anchor" href="#承接前文"></a> 承接前文</h1>
+<p>在上一篇文章中，我们深入了解了 Zig 的基础知识：如何声明变量、理解数据类型，以及掌握代码块和作用域的概念。我们了解到 Zig 是一门强调<strong>显式优于隐式</strong>的语言，编译器的严格检查帮助我们在编译期就发现潜在问题。</p>
+<p>今天，我们将继续 Zig 的学习之旅，探索三个核心主题：</p>
+<ol>
+<li><strong>数组（Arrays）</strong> - 固定大小的同类型数据集合</li>
+<li><strong>字符串（Strings）</strong> - Zig 中特殊的字节序列</li>
+<li><strong>内存管理</strong> - 使用 <code>defer</code> 和 <code>errdefer</code> 确保内存安全</li>
+</ol>
+<p>这些概念是理解 Zig 内存模型的关键，也是编写健壮 Zig 程序的基础。</p>
+<span id="more"></span>
+<h1 id="带标签的代码块"><a class="markdownIt-Anchor" href="#带标签的代码块"></a> 带标签的代码块</h1>
+<p>在深入数组之前，我们先来了解一下 Zig 中代码块的一个强大特性：<strong>带标签的代码块（Labeled Blocks）</strong>。</p>
+<p>回顾上一篇的内容，我们知道代码块可以作为表达式使用。而当我们给代码块添加标签后，可以使用 <code>break</code> 关键字从代码块中返回值，就像从函数返回一样：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">const std = @import(&quot;std&quot;);</span><br><span class="line"></span><br><span class="line">pub fn main() void &#123;</span><br><span class="line">    var y: i32 = 123;</span><br><span class="line">    </span><br><span class="line">    // 带标签的代码块</span><br><span class="line">    const x = add_one: &#123;</span><br><span class="line">        y += 1;</span><br><span class="line">        break :add_one y;  // 从代码块返回 y 的值</span><br><span class="line">    &#125;;</span><br><span class="line">    </span><br><span class="line">    std.debug.print(&quot;x = &#123;d&#125;, y = &#123;d&#125;\n&quot;, .&#123;x, y&#125;);</span><br><span class="line">    // 输出: x = 124, y = 124</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>带标签的代码块在需要根据复杂条件计算初始值时非常有用，它让代码逻辑更加清晰。</p>
+<h1 id="数组与切片"><a class="markdownIt-Anchor" href="#数组与切片"></a> 数组与切片</h1>
+<h2 id="数组的回顾与深入"><a class="markdownIt-Anchor" href="#数组的回顾与深入"></a> 数组的回顾与深入</h2>
+<p>在上一篇中，我们初步接触了数组。数组是 Zig 中最基础的数据结构之一，它的核心特点是：<strong>大小必须在编译时确定</strong>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 基本数组声明</span><br><span class="line">const nums = [4]u8&#123;48, 24, 12, 6&#125;;</span><br><span class="line"></span><br><span class="line">// 使用 _ 让编译器自动推断大小</span><br><span class="line">const values = [_]f64&#123;432.1, 87.2, 900.05&#125;;</span><br><span class="line"></span><br><span class="line">// 使用 ** 运算符创建重复值的数组</span><br><span class="line">const zeros = [_]u8&#123;0&#125; ** 10;  // 10 个 0</span><br></pre></td></tr></table></figure>
+<p>数组的类型格式为 <code>[N]T</code>，其中 <code>N</code> 是元素个数，<code>T</code> 是元素类型。这种设计让编译器能够在编译期进行严格的边界检查。</p>
+<h2 id="切片slice"><a class="markdownIt-Anchor" href="#切片slice"></a> 切片（Slice）</h2>
+<p>切片是 Zig 中另一个重要的概念。与数组不同，<strong>切片的大小在运行时确定</strong>。切片本质上是一个&quot;胖指针&quot;，包含两个部分：</p>
+<ul>
+<li>指向数据的指针 <code>[*]T</code></li>
+<li>元素数量 <code>usize</code></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const nums = [4]u8&#123;48, 24, 12, 6&#125;;</span><br><span class="line"></span><br><span class="line">// 从数组创建切片</span><br><span class="line">const slice = nums[1..3];  // 包含索引 1 和 2 的元素</span><br><span class="line"></span><br><span class="line">// 切片的类型是 []u8（或 []const u8）</span><br><span class="line">std.debug.print(&quot;切片类型: &#123;s&#125;\n&quot;, .&#123;@typeName(@TypeOf(slice))&#125;);</span><br></pre></td></tr></table></figure>
+<p>切片与数组的对比：</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>数组</th>
+<th>切片</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>大小确定时机</td>
+<td>编译时</td>
+<td>运行时</td>
+</tr>
+<tr>
+<td>类型表示</td>
+<td><code>[N]T</code></td>
+<td><code>[]T</code> 或 <code>[]const T</code></td>
+</tr>
+<tr>
+<td>内存占用</td>
+<td>仅数据本身</td>
+<td>指针 + 长度 + 数据</td>
+</tr>
+<tr>
+<td>使用场景</td>
+<td>固定大小数据</td>
+<td>动态大小数据</td>
+</tr>
+</tbody>
+</table>
+<h1 id="字符串"><a class="markdownIt-Anchor" href="#字符串"></a> 字符串</h1>
+<h2 id="字符串的本质"><a class="markdownIt-Anchor" href="#字符串的本质"></a> 字符串的本质</h2>
+<p>在 Zig 中，<strong>字符串本质上就是字节序列</strong>。Zig 没有专门的 <code>string</code> 类型，而是使用 <code>u8</code> 的数组或切片来表示字符串。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 字符串字面量</span><br><span class="line">const literal = &quot;Hello, Zig!&quot;;</span><br><span class="line"></span><br><span class="line">// 查看类型</span><br><span class="line">std.debug.print(&quot;类型: &#123;s&#125;\n&quot;, .&#123;@typeName(@TypeOf(literal))&#125;);</span><br><span class="line">// 输出: *const [11:0]u8</span><br></pre></td></tr></table></figure>
+<p>注意输出中的 <code>[11:0]</code>：</p>
+<ul>
+<li><code>11</code> 表示字符串长度（11 个字符）</li>
+<li><code>:0</code> 表示这是一个**哨兵终止（sentinel-terminated）**数组，以 0 结尾</li>
+</ul>
+<h2 id="哨兵终止数组-vs-切片"><a class="markdownIt-Anchor" href="#哨兵终止数组-vs-切片"></a> 哨兵终止数组 vs 切片</h2>
+<p>Zig 中有两种主要的字符串表示方式：</p>
+<h3 id="1-哨兵终止数组sentinel-terminated-array"><a class="markdownIt-Anchor" href="#1-哨兵终止数组sentinel-terminated-array"></a> 1. 哨兵终止数组（Sentinel-terminated Array）</h3>
+<p>这种数组在末尾有一个特殊的&quot;哨兵值&quot;（通常是 0），类似于 C 语言中的空终止字符串：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 字符串字面量默认是哨兵终止的</span><br><span class="line">const str = &quot;Hello&quot;;</span><br><span class="line">// 类型: *const [5:0]u8</span><br><span class="line"></span><br><span class="line">// 显式创建哨兵终止数组</span><br><span class="line">const arr: [5:0]u8 = .&#123;&#x27;H&#x27;, &#x27;e&#x27;, &#x27;l&#x27;, &#x27;l&#x27;, &#x27;o&#x27;&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="2-切片slice"><a class="markdownIt-Anchor" href="#2-切片slice"></a> 2. 切片（Slice）</h3>
+<p>标准库函数通常接收字符串切片作为参数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const str: []const u8 = &quot;Hello, World!&quot;;</span><br><span class="line">// 类型: []const u8</span><br><span class="line"></span><br><span class="line">// 切片不要求以 0 结尾</span><br><span class="line">const slice: []const u8 = &amp;[_]u8&#123;&#x27;H&#x27;, &#x27;i&#x27;&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="字符串常用操作"><a class="markdownIt-Anchor" href="#字符串常用操作"></a> 字符串常用操作</h2>
+<p>Zig 标准库的 <code>std.mem</code> 模块提供了丰富的字符串操作函数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">const std = @import(&quot;std&quot;);</span><br><span class="line"></span><br><span class="line">pub fn main() void &#123;</span><br><span class="line">    const str1 = &quot;Hello&quot;;</span><br><span class="line">    const str2 = &quot;World&quot;;</span><br><span class="line">    </span><br><span class="line">    // 字符串比较</span><br><span class="line">    const equal = std.mem.eql(u8, str1, str2);</span><br><span class="line">    </span><br><span class="line">    // 检查前缀/后缀</span><br><span class="line">    const starts_with = std.mem.startsWith(u8, str1, &quot;He&quot;);</span><br><span class="line">    const ends_with = std.mem.endsWith(u8, str1, &quot;lo&quot;);</span><br><span class="line">    </span><br><span class="line">    // 分割字符串</span><br><span class="line">    var iter = std.mem.splitScalar(u8, &quot;a,b,c&quot;, &#x27;,&#x27;);</span><br><span class="line">    while (iter.next()) |part| &#123;</span><br><span class="line">        std.debug.print(&quot;&#123;s&#125;\n&quot;, .&#123;part&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // 去除空白</span><br><span class="line">    const trimmed = std.mem.trim(u8, &quot;  hello  &quot;, &quot; &quot;);</span><br><span class="line">    </span><br><span class="line">    // 统计子串出现次数</span><br><span class="line">    const count = std.mem.count(u8, &quot;abababa&quot;, &quot;aba&quot;);</span><br><span class="line">    </span><br><span class="line">    std.debug.print(&quot;equal: &#123;&#125;, starts_with: &#123;&#125;, ends_with: &#123;&#125;, count: &#123;d&#125;\n&quot;, </span><br><span class="line">        .&#123;equal, starts_with, ends_with, count&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>常用字符串函数列表：</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>std.mem.eql()</code></td>
+<td>比较两个字符串是否相等</td>
+</tr>
+<tr>
+<td><code>std.mem.splitScalar()</code></td>
+<td>按单个字符分割字符串</td>
+</tr>
+<tr>
+<td><code>std.mem.splitSequence()</code></td>
+<td>按子串分割字符串</td>
+</tr>
+<tr>
+<td><code>std.mem.startsWith()</code></td>
+<td>检查字符串是否以指定前缀开头</td>
+</tr>
+<tr>
+<td><code>std.mem.endsWith()</code></td>
+<td>检查字符串是否以指定后缀结尾</td>
+</tr>
+<tr>
+<td><code>std.mem.trim()</code></td>
+<td>去除字符串首尾的指定字符</td>
+</tr>
+<tr>
+<td><code>std.mem.concat()</code></td>
+<td>连接多个字符串</td>
+</tr>
+<tr>
+<td><code>std.mem.count()</code></td>
+<td>统计子串出现次数</td>
+</tr>
+<tr>
+<td><code>std.mem.replace()</code></td>
+<td>替换子串</td>
+</tr>
+</tbody>
+</table>
+<h2 id="unicode-处理"><a class="markdownIt-Anchor" href="#unicode-处理"></a> Unicode 处理</h2>
+<p>如果需要处理 Unicode 字符（如中文、日文等），可以使用 <code>std.unicode</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">const std = @import(&quot;std&quot;);</span><br><span class="line"></span><br><span class="line">pub fn main() !void &#123;</span><br><span class="line">    // 日文 &quot;アメリカ&quot;（美国）</span><br><span class="line">    const text = &quot;アメリカ&quot;;</span><br><span class="line">    </span><br><span class="line">    // 使用 Utf8View 创建迭代器</span><br><span class="line">    var utf8 = try std.unicode.Utf8View.init(text);</span><br><span class="line">    var iter = utf8.iterator();</span><br><span class="line">    </span><br><span class="line">    while (iter.nextCodepointSlice()) |codepoint| &#123;</span><br><span class="line">        std.debug.print(&quot;码点: &#123;x&#125;\n&quot;, .&#123;codepoint&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    // 输出每个字符的 UTF-8 编码</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：Zig 的字符串是按字节索引的，处理多字节字符时需要使用 Unicode 迭代器。</p>
+</blockquote>
+<h1 id="内存管理与-defer"><a class="markdownIt-Anchor" href="#内存管理与-defer"></a> 内存管理与 defer</h1>
+<h2 id="内存安全的重要性"><a class="markdownIt-Anchor" href="#内存安全的重要性"></a> 内存安全的重要性</h2>
+<p>在系统编程中，内存管理是最容易出现问题的领域。常见的内存错误包括：</p>
+<ul>
+<li><strong>内存泄漏</strong>：分配了内存但未释放</li>
+<li><strong>使用已释放内存</strong>：访问已经 <code>free</code> 的内存</li>
+<li><strong>双重释放</strong>：对同一块内存调用两次 <code>free</code></li>
+<li><strong>缓冲区溢出</strong>：访问数组边界外的内存</li>
+</ul>
+<p>Rust 通过所有权和借用检查器强制内存安全，而 Zig 采取了一种不同的哲学：<strong>提供工具，但不强制</strong>。Zig 相信程序员应该有能力写出安全的代码，而不是被编译器限制。</p>
+<h2 id="defer延迟执行"><a class="markdownIt-Anchor" href="#defer延迟执行"></a> defer：延迟执行</h2>
+<p><code>defer</code> 是 Zig 中最重要的内存管理工具之一。它确保在<strong>当前作用域结束时</strong>执行指定的清理代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">const std = @import(&quot;std&quot;);</span><br><span class="line"></span><br><span class="line">pub fn main() !void &#123;</span><br><span class="line">    const allocator = std.heap.page_allocator;</span><br><span class="line">    </span><br><span class="line">    // 分配内存</span><br><span class="line">    const ptr = try allocator.alloc(u8, 100);</span><br><span class="line">    </span><br><span class="line">    // 确保内存会被释放</span><br><span class="line">    defer allocator.free(ptr);</span><br><span class="line">    </span><br><span class="line">    // 使用内存...</span><br><span class="line">    ptr[0] = 42;</span><br><span class="line">    </span><br><span class="line">    // 函数结束时，defer 语句自动执行 free</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>defer</code> 的核心优势：</p>
+<ol>
+<li><strong>物理位置接近</strong>：分配和释放代码写在一起，便于维护</li>
+<li><strong>逻辑绑定</strong>：释放操作与作用域生命周期绑定</li>
+<li><strong>避免遗忘</strong>：无论函数如何返回，清理代码都会执行</li>
+</ol>
+<h2 id="errdefer错误时执行"><a class="markdownIt-Anchor" href="#errdefer错误时执行"></a> errdefer：错误时执行</h2>
+<p><code>errdefer</code> 是 <code>defer</code> 的变体，它只在<strong>函数返回错误时</strong>执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">const std = @import(&quot;std&quot;);</span><br><span class="line"></span><br><span class="line">fn doSomething() !void &#123;</span><br><span class="line">    const allocator = std.heap.page_allocator;</span><br><span class="line">    </span><br><span class="line">    const resource1 = try allocateResource1();</span><br><span class="line">    defer deallocateResource1(resource1);</span><br><span class="line">    </span><br><span class="line">    const resource2 = try allocateResource2();</span><br><span class="line">    // 如果 allocateResource2 失败，resource1 会被 defer 释放</span><br><span class="line">    // 但如果 resource2 成功，之后发生错误，我们需要释放 resource2</span><br><span class="line">    errdefer deallocateResource2(resource2);  // 只在错误时执行</span><br><span class="line">    </span><br><span class="line">    // 进行一些可能失败的操作</span><br><span class="line">    try mightFail();</span><br><span class="line">    </span><br><span class="line">    // 成功后，errdefer 不会执行</span><br><span class="line">    // 但我们需要确保 resource2 最终被释放</span><br><span class="line">    defer deallocateResource2(resource2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>errdefer</code> 的典型使用场景是<strong>资源的部分初始化</strong>：当函数在初始化多个资源时失败，需要清理已经分配的资源。</p>
+<h2 id="defer-的执行顺序"><a class="markdownIt-Anchor" href="#defer-的执行顺序"></a> defer 的执行顺序</h2>
+<p>多个 <code>defer</code> 语句按照**后进先出（LIFO）**的顺序执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">const std = @import(&quot;std&quot;);</span><br><span class="line"></span><br><span class="line">pub fn main() void &#123;</span><br><span class="line">    defer std.debug.print(&quot;1\n&quot;, .&#123;&#125;);</span><br><span class="line">    defer std.debug.print(&quot;2\n&quot;, .&#123;&#125;);</span><br><span class="line">    defer std.debug.print(&quot;3\n&quot;, .&#123;&#125;);</span><br><span class="line">    </span><br><span class="line">    std.debug.print(&quot;执行中...\n&quot;, .&#123;&#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 输出:</span><br><span class="line">// 执行中...</span><br><span class="line">// 3</span><br><span class="line">// 2</span><br><span class="line">// 1</span><br></pre></td></tr></table></figure>
+<p>这个特性与栈的行为一致，确保资源按照正确的顺序释放（先分配的后释放）。</p>
+<h2 id="zig-的内存安全特性总结"><a class="markdownIt-Anchor" href="#zig-的内存安全特性总结"></a> Zig 的内存安全特性总结</h2>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>defer</code></td>
+<td>作用域结束时执行清理</td>
+</tr>
+<tr>
+<td><code>errdefer</code></td>
+<td>发生错误时执行清理</td>
+</tr>
+<tr>
+<td>非空指针</td>
+<td>指针默认不可为空，避免空指针解引用</td>
+</tr>
+<tr>
+<td>测试分配器</td>
+<td>检测内存泄漏和双重释放</td>
+</tr>
+<tr>
+<td>数组边界检查</td>
+<td>编译期和运行时的边界检查</td>
+</tr>
+</tbody>
+</table>
+<h1 id="实战练习"><a class="markdownIt-Anchor" href="#实战练习"></a> 实战练习</h1>
+<p>让我们通过几个 Ziglings 练习来巩固所学知识，包括从 004 - 008 的练习。</p>
+<h2 id="练习数组操作"><a class="markdownIt-Anchor" href="#练习数组操作"></a> 练习：数组操作</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">const std = @import(&quot;std&quot;);</span><br><span class="line"></span><br><span class="line">pub fn main() void &#123;</span><br><span class="line">    // 创建一个数组</span><br><span class="line">    const arr = [_]u8&#123;1, 2, 3, 4, 5&#125;;</span><br><span class="line">    </span><br><span class="line">    // 使用切片获取子数组</span><br><span class="line">    const slice = arr[1..4];</span><br><span class="line">    std.debug.print(&quot;切片: &#123;any&#125;\n&quot;, .&#123;slice&#125;);</span><br><span class="line">    </span><br><span class="line">    // 使用 ** 运算符</span><br><span class="line">    const repeated = [_]u8&#123;1, 2&#125; ** 3;</span><br><span class="line">    std.debug.print(&quot;重复: &#123;any&#125;\n&quot;, .&#123;repeated&#125;);</span><br><span class="line">    </span><br><span class="line">    // 使用 ++ 运算符</span><br><span class="line">    const combined = [_]u8&#123;1, 2&#125; ++ [_]u8&#123;3, 4&#125;;</span><br><span class="line">    std.debug.print(&quot;连接: &#123;any&#125;\n&quot;, .&#123;combined&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="练习字符串处理"><a class="markdownIt-Anchor" href="#练习字符串处理"></a> 练习：字符串处理</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">const std = @import(&quot;std&quot;);</span><br><span class="line"></span><br><span class="line">pub fn main() void &#123;</span><br><span class="line">    const text = &quot;Hello, Zig World!&quot;;</span><br><span class="line">    </span><br><span class="line">    // 检查前缀</span><br><span class="line">    if (std.mem.startsWith(u8, text, &quot;Hello&quot;)) &#123;</span><br><span class="line">        std.debug.print(&quot;以 Hello 开头\n&quot;, .&#123;&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // 分割字符串</span><br><span class="line">    var iter = std.mem.splitScalar(u8, &quot;apple,banana,cherry&quot;, &#x27;,&#x27;);</span><br><span class="line">    while (iter.next()) |fruit| &#123;</span><br><span class="line">        std.debug.print(&quot;水果: &#123;s&#125;\n&quot;, .&#123;fruit&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="练习使用-defer"><a class="markdownIt-Anchor" href="#练习使用-defer"></a> 练习：使用 defer</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">const std = @import(&quot;std&quot;);</span><br><span class="line"></span><br><span class="line">fn readFile(path: []const u8) ![]u8 &#123;</span><br><span class="line">    const file = try std.fs.cwd().openFile(path, .&#123;&#125;);</span><br><span class="line">    defer file.close();  // 确保文件被关闭</span><br><span class="line">    </span><br><span class="line">    const size = try file.getEndPos();</span><br><span class="line">    const allocator = std.heap.page_allocator;</span><br><span class="line">    </span><br><span class="line">    const buffer = try allocator.alloc(u8, size);</span><br><span class="line">    errdefer allocator.free(buffer);  // 如果读取失败，释放内存</span><br><span class="line">    </span><br><span class="line">    _ = try file.readAll(buffer);</span><br><span class="line">    </span><br><span class="line">    return buffer;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h1>
+<p>本文我们深入学习了 Zig 的三个核心概念：</p>
+<ol>
+<li><strong>带标签的代码块</strong>：让代码块可以返回值，简化条件初始化逻辑</li>
+<li><strong>数组与字符串</strong>：
+<ul>
+<li>数组大小编译时确定，类型为 <code>[N]T</code></li>
+<li>切片大小运行时确定，类型为 <code>[]T</code></li>
+<li>字符串是 <code>u8</code> 的数组或切片</li>
+<li>标准库提供丰富的字符串操作函数</li>
+</ul>
+</li>
+<li><strong>内存管理</strong>：
+<ul>
+<li><code>defer</code> 确保资源在作用域结束时释放</li>
+<li><code>errdefer</code> 处理错误时的资源清理</li>
+<li>Zig 提供工具而非强制，让程序员掌控内存安全</li>
+</ul>
+</li>
+</ol>
+<p>Zig 的设计理念是<strong>显式优于隐式</strong>，通过 <code>defer</code> 等机制，我们可以在保持代码清晰的同时，确保内存安全。这种设计让 Zig 既拥有 C 语言的灵活性，又能避免许多常见的内存错误。</p>
+<p>在下一篇文章中，我们将探索 Zig 的控制流（if、switch、while、for）和函数，继续我们的 Zig 学习之旅！</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://jerry050512.github.io">Gang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://jerry050512.github.io/2026/03/13/zig-arrays-strings-and-defer/">https://jerry050512.github.io/2026/03/13/zig-arrays-strings-and-defer/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://jerry050512.github.io" target="_blank">Gang の blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Zig/">Zig</a><a class="post-meta__tags" href="/tags/language/">language</a><a class="post-meta__tags" href="/tags/programming/">programming</a><a class="post-meta__tags" href="/tags/arrays/">arrays</a><a class="post-meta__tags" href="/tags/strings/">strings</a><a class="post-meta__tags" href="/tags/memory/">memory</a></div><div class="post-share"><div class="social-share" data-image="/img/avatar.jpeg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2026/03/13/zig-control-flow/" title="【Zig 入门】控制流：if、switch、while 与 for"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">【Zig 入门】控制流：if、switch、while 与 for</div></div><div class="info-2"><div class="info-item-1"> 承接前文 在前两篇文章中，我们学习了 Zig 的基础知识：变量与数据类型、数组与字符串，以及使用 defer 进行内存管理。掌握了这些基础概念后，今天我们就来探索 Zig 的**控制流（Control Flow）**机制。 控制流是编程语言的核心，它决定了程序的执行路径。Zig 提供了多种控制流结构：  if - 条件判断 switch - 多分支选择 while - 条件循环 for -...</div></div></div></a><a class="pagination-related" href="/2026/03/11/zig-objects-and-data-types/" title="【Zig 入门】对象、数据类型与代码块"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">【Zig 入门】对象、数据类型与代码块</div></div><div class="info-2"><div class="info-item-1"> Zig 的哲学 Zig 是一门现代、底层的通用编程语言，被许多程序员视为 C 语言的现代化改进版本。Zig 的核心理念可以用&quot;少即是多&quot;来概括——它不是通过不断增加新特性来变得现代，而是通过移除 C 和 C++ 中令人困扰的特性来实现改进。 正如 Zig 官网所言：  “Focus on debugging your application rather than de...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/03/13/zig-control-flow/" title="【Zig 入门】控制流：if、switch、while 与 for"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-13</div><div class="info-item-2">【Zig 入门】控制流：if、switch、while 与 for</div></div><div class="info-2"><div class="info-item-1"> 承接前文 在前两篇文章中，我们学习了 Zig 的基础知识：变量与数据类型、数组与字符串，以及使用 defer 进行内存管理。掌握了这些基础概念后，今天我们就来探索 Zig 的**控制流（Control Flow）**机制。 控制流是编程语言的核心，它决定了程序的执行路径。Zig 提供了多种控制流结构：  if - 条件判断 switch - 多分支选择 while - 条件循环 for -...</div></div></div></a><a class="pagination-related" href="/2026/03/11/zig-objects-and-data-types/" title="【Zig 入门】对象、数据类型与代码块"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-11</div><div class="info-item-2">【Zig 入门】对象、数据类型与代码块</div></div><div class="info-2"><div class="info-item-1"> Zig 的哲学 Zig 是一门现代、底层的通用编程语言，被许多程序员视为 C 语言的现代化改进版本。Zig 的核心理念可以用&quot;少即是多&quot;来概括——它不是通过不断增加新特性来变得现代，而是通过移除 C 和 C++ 中令人困扰的特性来实现改进。 正如 Zig 官网所言：  “Focus on debugging your application rather than de...</div></div></div></a><a class="pagination-related" href="/2026/03/10/zig-intro-to-zig/" title="【Zig 学习】Zig 入门指南：从零开始探索现代系统编程语言"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-10</div><div class="info-item-2">【Zig 学习】Zig 入门指南：从零开始探索现代系统编程语言</div></div><div class="info-2"><div class="info-item-1"> 前言：为什么选择 Zig？ 最近偶然发现了 Nullclaw 这个项目——一个用 Zig 编写的轻量级工具。令我惊讶的是，它在保持出色性能的同时，二进制体积也非常小巧。这让我对 Zig 这门语言产生了浓厚的兴趣，决定深入探索一番。 Zig 是一门现代化的系统级编程语言，由 Andrew Kelley 于 2016 年创建。它的设计目标是成为 C 的更好替代品，主打简洁、健壮和可维护性。与 ...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Gang</div><div class="author-info-description">Hello World!</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">31</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">70</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Jerry050512"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Jerry050512" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:jerry050512@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">No Announcement now</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%89%BF%E6%8E%A5%E5%89%8D%E6%96%87"><span class="toc-number">1.</span> <span class="toc-text"> 承接前文</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%A6%E6%A0%87%E7%AD%BE%E7%9A%84%E4%BB%A3%E7%A0%81%E5%9D%97"><span class="toc-number">2.</span> <span class="toc-text"> 带标签的代码块</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E4%B8%8E%E5%88%87%E7%89%87"><span class="toc-number">3.</span> <span class="toc-text"> 数组与切片</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E7%9A%84%E5%9B%9E%E9%A1%BE%E4%B8%8E%E6%B7%B1%E5%85%A5"><span class="toc-number">3.1.</span> <span class="toc-text"> 数组的回顾与深入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%87%E7%89%87slice"><span class="toc-number">3.2.</span> <span class="toc-text"> 切片（Slice）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">4.</span> <span class="toc-text"> 字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%9C%AC%E8%B4%A8"><span class="toc-number">4.1.</span> <span class="toc-text"> 字符串的本质</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%93%A8%E5%85%B5%E7%BB%88%E6%AD%A2%E6%95%B0%E7%BB%84-vs-%E5%88%87%E7%89%87"><span class="toc-number">4.2.</span> <span class="toc-text"> 哨兵终止数组 vs 切片</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%93%A8%E5%85%B5%E7%BB%88%E6%AD%A2%E6%95%B0%E7%BB%84sentinel-terminated-array"><span class="toc-number">4.2.1.</span> <span class="toc-text"> 1. 哨兵终止数组（Sentinel-terminated Array）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%88%87%E7%89%87slice"><span class="toc-number">4.2.2.</span> <span class="toc-text"> 2. 切片（Slice）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C"><span class="toc-number">4.3.</span> <span class="toc-text"> 字符串常用操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#unicode-%E5%A4%84%E7%90%86"><span class="toc-number">4.4.</span> <span class="toc-text"> Unicode 处理</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E4%B8%8E-defer"><span class="toc-number">5.</span> <span class="toc-text"> 内存管理与 defer</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E5%AE%89%E5%85%A8%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7"><span class="toc-number">5.1.</span> <span class="toc-text"> 内存安全的重要性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#defer%E5%BB%B6%E8%BF%9F%E6%89%A7%E8%A1%8C"><span class="toc-number">5.2.</span> <span class="toc-text"> defer：延迟执行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#errdefer%E9%94%99%E8%AF%AF%E6%97%B6%E6%89%A7%E8%A1%8C"><span class="toc-number">5.3.</span> <span class="toc-text"> errdefer：错误时执行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#defer-%E7%9A%84%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F"><span class="toc-number">5.4.</span> <span class="toc-text"> defer 的执行顺序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#zig-%E7%9A%84%E5%86%85%E5%AD%98%E5%AE%89%E5%85%A8%E7%89%B9%E6%80%A7%E6%80%BB%E7%BB%93"><span class="toc-number">5.5.</span> <span class="toc-text"> Zig 的内存安全特性总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E6%88%98%E7%BB%83%E4%B9%A0"><span class="toc-number">6.</span> <span class="toc-text"> 实战练习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%83%E4%B9%A0%E6%95%B0%E7%BB%84%E6%93%8D%E4%BD%9C"><span class="toc-number">6.1.</span> <span class="toc-text"> 练习：数组操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%83%E4%B9%A0%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86"><span class="toc-number">6.2.</span> <span class="toc-text"> 练习：字符串处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%83%E4%B9%A0%E4%BD%BF%E7%94%A8-defer"><span class="toc-number">6.3.</span> <span class="toc-text"> 练习：使用 defer</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">7.</span> <span class="toc-text"> 总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/13/zig-control-flow/" title="【Zig 入门】控制流：if、switch、while 与 for">【Zig 入门】控制流：if、switch、while 与 for</a><time datetime="2026-03-13T08:57:03.530Z" title="更新于 2026-03-13 16:57:03">2026-03-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/13/zig-arrays-strings-and-defer/" title="【Zig 入门】数组、字符串与内存管理">【Zig 入门】数组、字符串与内存管理</a><time datetime="2026-03-13T08:47:34.320Z" title="更新于 2026-03-13 16:47:34">2026-03-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/11/zig-objects-and-data-types/" title="【Zig 入门】对象、数据类型与代码块">【Zig 入门】对象、数据类型与代码块</a><time datetime="2026-03-11T08:14:07.441Z" title="更新于 2026-03-11 16:14:07">2026-03-11</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2024 - 2026 By Gang</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><div class="js-pjax"></div><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
